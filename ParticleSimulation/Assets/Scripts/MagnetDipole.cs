@@ -32,6 +32,7 @@ public class MagnetDipole : MonoBehaviour
     private Vector3 M1, M2; //磁気双極子（ベクトル）
     private float shita_x, shita_y;
     public float ratationSpeed;
+    public bool Rotation;
 
     //Math value
     private float pi;
@@ -71,10 +72,11 @@ public class MagnetDipole : MonoBehaviour
 
     private void Update()
     {
+        time = Time.deltaTime * timeScale;
         Noise();
         Interactive();
-        RatationMagneticField();
-        //time += Time.deltaTime * timeScale;
+        if (Rotation)
+            RatationMagneticField();
     }
 
     private void Noise()
@@ -85,13 +87,13 @@ public class MagnetDipole : MonoBehaviour
         for (n = 0; n < particleNumber; n++)
         {
             nowPosition = MagneticParticle[n].transform.position;
-            V = (nowPosition - BeforPosition[n]) / timeScale;
+            V = (nowPosition - BeforPosition[n]) / time;
             x = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * Random.Range(0f, 1.0f));
             y = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * Random.Range(0f, 1.0f));
             z = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * Random.Range(0f, 1.0f));
-            x = -beta * V.x + x * randomForce * timeScale;
-            y = -beta * V.y + y * randomForce * timeScale;
-            z = -beta * V.z + z * randomForce * timeScale;
+            x = -beta * V.x + x * randomForce * time;
+            y = -beta * V.y + y * randomForce * time;
+            z = -beta * V.z + z * randomForce * time;
             brown = new Vector3(x, y, z);
             MagneticParticleRB[n].AddForce(brown);
             BeforPosition[n] = nowPosition;
@@ -121,7 +123,7 @@ public class MagnetDipole : MonoBehaviour
                 H[i] += dH[i];
                 H[j] -= dH[i];
             }
-            MagneticParticleRB[i].AddForce(H[i]*timeScale);
+            MagneticParticleRB[i].AddForce(H[i]*time);
         }
     }
 
@@ -152,7 +154,7 @@ public class MagnetDipole : MonoBehaviour
     private void RatationMagneticField()
     {
         float x, y, z;
-        shita_x += ratationSpeed * pi / 180;
+        shita_x += ratationSpeed * time * pi / 180;
         x = (q * diameter / u0) * Mathf.Sin(shita_y) * Mathf.Cos(shita_x);
         y = (q * diameter / u0) * Mathf.Cos(shita_y);
         z = (q * diameter / u0) * Mathf.Sin(shita_y) * Mathf.Sin(shita_x);
