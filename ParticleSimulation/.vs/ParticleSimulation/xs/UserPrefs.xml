@@ -1,0 +1,34 @@
+﻿<Properties StartupConfiguration="{3EF46B08-A5A1-5455-5F7D-E48F1A9E72EC}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MagnetDipole.cs">
+    <Files>
+      <File FileName="Assets/Scripts/MagnetDipole.cs" Line="155" Column="33" />
+      <File FileName="Assets/Scripts/WallController.cs" Line="24" Column="44" />
+      <File FileName="Assets/Scripts/SetParticle.cs" Line="65" Column="1" />
+      <File FileName="Assets/Scripts/ChangeParticleColor.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SphereWall.cs" Line="7" Column="2" />
+      <File FileName="Assets/Scripts/ChangeCamera.cs" Line="34" Column="41" />
+      <File FileName="Assets/Scripts/GetInfo.cs" Line="15" Column="22" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="ParticleSimulation" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="Unuse" expanded="True" />
+                <Node name="MagnetDipole.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="bb90fe5d-d623-4431-a635-c3071c5ab6c7" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
