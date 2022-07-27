@@ -1,11 +1,11 @@
 ﻿<Properties StartupConfiguration="{3EF46B08-A5A1-5455-5F7D-E48F1A9E72EC}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MagnetDipole.cs">
     <Files>
-      <File FileName="Assets/Scripts/MagnetDipole.cs" Line="75" Column="43" />
+      <File FileName="Assets/Scripts/MagnetDipole.cs" Line="75" Column="30" />
       <File FileName="Assets/Scripts/WallController.cs" />
       <File FileName="Assets/Scripts/SetParticle.cs" />
       <File FileName="Assets/Scripts/ChangeParticleColor.cs" />
-      <File FileName="Assets/Scripts/SphereWall.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SphereWall.cs" />
       <File FileName="Assets/Scripts/ChangeCamera.cs" />
       <File FileName="Assets/Scripts/GetInfo.cs" />
     </Files>

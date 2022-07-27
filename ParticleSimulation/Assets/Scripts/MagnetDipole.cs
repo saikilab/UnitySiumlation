@@ -14,7 +14,7 @@ public class MagnetDipole : MonoBehaviour
     public GameObject[] MagneticParticle;
     public Rigidbody[] MagneticParticleRB;
     public int particleNumber;
-    public float diameter, time, timeScale;
+    public float diameter, time;
 
     //noise value
     public float randomForce;
@@ -72,7 +72,7 @@ public class MagnetDipole : MonoBehaviour
 
     private void Update()
     {
-        time = Time.deltaTime * timeScale;
+        time = Time.deltaTime;
         Noise();
         Interactive();
         if (Rotation)
