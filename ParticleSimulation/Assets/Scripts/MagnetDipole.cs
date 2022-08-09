@@ -2,6 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using System.IO;
+using System.Text;
+using System;
 
 public class MagnetDipole : MonoBehaviour
 {
@@ -33,10 +36,16 @@ public class MagnetDipole : MonoBehaviour
     private float shita_x, shita_y;
     public float ratationSpeed;
     public bool Rotation;
+    public float thDist;
 
     //Math value
     private float pi;
     private int i, j;
+
+    //Save
+    private StreamWriter sw;
+    private int step;
+    private string dirN;
 
     private void Start()
     {
@@ -68,15 +77,23 @@ public class MagnetDipole : MonoBehaviour
         BeforPosition = new Vector3[particleNumber];
         OFFMag();
         shita_y = 30 * pi / 180;
+
+        dirN = DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
+        Directory.CreateDirectory(@dirN);
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         time = Time.deltaTime;
         Noise();
-        Interactive();
+
+        if (H_pow != 0)
+           Interactive();
         if (Rotation)
             RatationMagneticField();
+
+        Save();
+        step++;
     }
 
     private void Noise()
@@ -88,9 +105,9 @@ public class MagnetDipole : MonoBehaviour
         {
             nowPosition = MagneticParticle[n].transform.position;
             V = (nowPosition - BeforPosition[n]) / time;
-            x = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * Random.Range(0f, 1.0f));
-            y = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * Random.Range(0f, 1.0f));
-            z = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * Random.Range(0f, 1.0f));
+            x = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
+            y = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
+            z = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
             x = -beta * V.x + x * randomForce * time;
             y = -beta * V.y + y * randomForce * time;
             z = -beta * V.z + z * randomForce * time;
@@ -115,13 +132,16 @@ public class MagnetDipole : MonoBehaviour
                 posVector = MagneticParticle[i].transform.position - MagneticParticle[j].transform.position;
                 Vector3 E; //単ベクトル
                 float dist = Mathf.Sqrt(Vector3.Dot(posVector, posVector));
-                E = posVector / dist;
+                if(dist < thDist)
+                {
+                    E = posVector / dist;
 
-                dH[i] = (3f * u0 / (4f * pi * Mathf.Pow(dist, 4f))) * (Vector3.Dot(M1, E) * M2
-                      + Vector3.Dot(M2, E) * M1 + Vector3.Dot(M1, M2) * E
-                      - 5f * Vector3.Dot(M1, E) * Vector3.Dot(M2, E) * E);
-                H[i] += dH[i];
-                H[j] -= dH[i];
+                    dH[i] = (3f * u0 / (4f * pi * Mathf.Pow(dist, 4f))) * (Vector3.Dot(M1, E) * M2
+                          + Vector3.Dot(M2, E) * M1 + Vector3.Dot(M1, M2) * E
+                          - 5f * Vector3.Dot(M1, E) * Vector3.Dot(M2, E) * E);
+                    H[i] += dH[i];
+                    H[j] -= dH[i];
+                }
             }
             MagneticParticleRB[i].AddForce(H[i]*time);
         }
@@ -161,5 +181,19 @@ public class MagnetDipole : MonoBehaviour
 
         M1 = new Vector3(x, y, z);
         M2 = M1;
+    }
+
+    public void Save()
+    {
+        string fileName = dirN + "/" + step + ".csv";
+        sw = new StreamWriter(@fileName, false, Encoding.GetEncoding("Shift_JIS"));
+
+        int s;
+        for (s=0; s < particleNumber; s++)
+        {
+            string[] s1 = { MagneticParticle[s].transform.position.x.ToString(), MagneticParticle[s].transform.position.y.ToString() };
+            string s2 = string.Join(",", s1);
+            sw.WriteLine(s2);
+        }
     }
 }
