@@ -64,7 +64,7 @@
     <Compile Include="Assets/Scripts/WallController.cs" />
     <Compile Include="Assets/Scripts/Unuse/ParticleController.cs" />
     <Compile Include="Assets/Scripts/MagnetDipole.cs" />
-    <Compile Include="Assets/Scripts/ChangeCamera.cs" />
+    <Compile Include="Assets/Scripts/Unuse/ChangeCamera.cs" />
     <Compile Include="Assets/Scripts/SetParticle.cs" />
     <Compile Include="Assets/Scripts/Unuse/MagneticField.cs" />
     <Compile Include="Assets/Scripts/GetInfo.cs" />

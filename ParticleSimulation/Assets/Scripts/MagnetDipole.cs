@@ -27,10 +27,10 @@ public class MagnetDipole : MonoBehaviour
 
     //mag value
     private Vector3[] H, dH; // 磁界 = m/(4πμ0r^2) = 1/mr^2?
-    private float u0; //透磁率
+    private float u0; //透磁率 約1.26 10^-6 N/A^2
     public float H_pow; //外部磁場の強さ
     public float default_H_pow; //外部磁場の強さの初期値 60
-    public float kai; //磁化率 100
+    public float kai; //体積磁化率
     private float q; //磁荷　kai * H_pow
     private Vector3 M1, M2; //磁気双極子（ベクトル）
     private float shita_x, shita_y;
@@ -43,6 +43,7 @@ public class MagnetDipole : MonoBehaviour
     private int i, j;
 
     //Save
+    public bool switch_save;
     private StreamWriter sw;
     private int step;
     private string dirN;
@@ -65,7 +66,7 @@ public class MagnetDipole : MonoBehaviour
         pi = Mathf.PI;
         H = new Vector3[particleNumber];
         dH = new Vector3[particleNumber];
-        u0 = 0.1f;
+        u0 = 0.000001f;
         H_pow = default_H_pow;
         q = kai * H_pow;
 
@@ -78,11 +79,14 @@ public class MagnetDipole : MonoBehaviour
         OFFMag();
         shita_y = 30 * pi / 180;
 
-        dirN = DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
-        Directory.CreateDirectory(@dirN);
+        if (switch_save)
+        {
+            dirN = DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
+            Directory.CreateDirectory(@dirN);
+        }
     }
 
-    private void FixedUpdate()
+    private void Update()
     {
         time = Time.deltaTime;
         Noise();
@@ -91,9 +95,11 @@ public class MagnetDipole : MonoBehaviour
            Interactive();
         if (Rotation)
             RatationMagneticField();
-
-        Save();
-        step++;
+        if (switch_save)
+        {
+            Save();
+            step++;
+        }
     }
 
     private void Noise()
@@ -144,14 +150,15 @@ public class MagnetDipole : MonoBehaviour
                 }
             }
             MagneticParticleRB[i].AddForce(H[i]*time);
+            //Debug.Log(H[i]);
         }
     }
 
     public void ChangeMagneticField()
     {
-        q = kai * H_pow;
-        M1 = new Vector3(0f, 0f, q * diameter / u0);
-        M2 = new Vector3(0f, 0f, q * diameter / u0);
+        q = (4/3) * pi * Mathf.Pow((diameter/2), 3) * kai * H_pow / u0;
+        M1 = new Vector3(0f, 0f, q);
+        M2 = new Vector3(0f, 0f, q);
         InfoPanel.GetComponent<GetInfo>().UpdateMagInfo();
     }
 
@@ -185,13 +192,18 @@ public class MagnetDipole : MonoBehaviour
 
     public void Save()
     {
-        string fileName = dirN + "/" + step + ".csv";
+        string fileName = dirN + "/particle_collod_" + step.ToString("d5") + ".cdv";
         sw = new StreamWriter(@fileName, false, Encoding.GetEncoding("Shift_JIS"));
 
         int s;
         for (s=0; s < particleNumber; s++)
         {
-            string[] s1 = { MagneticParticle[s].transform.position.x.ToString(), MagneticParticle[s].transform.position.y.ToString() };
+            string z;
+            if (MagneticParticle[s].transform.position.z < 0)
+                z = "2";
+            else
+                z = "3";
+            string[] s1 = {s.ToString(), z, MagneticParticle[s].transform.position.z.ToString(), MagneticParticle[s].transform.position.x.ToString(), MagneticParticle[s].transform.position.y.ToString() };
             string s2 = string.Join(",", s1);
             sw.WriteLine(s2);
         }
