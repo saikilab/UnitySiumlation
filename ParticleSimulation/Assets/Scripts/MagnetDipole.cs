@@ -44,7 +44,6 @@ public class MagnetDipole : MonoBehaviour
 
     //Save
     public bool switch_save;
-    private StreamWriter sw;
     private int step;
     private string dirN;
 
@@ -86,8 +85,13 @@ public class MagnetDipole : MonoBehaviour
         }
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
+        if (switch_save)
+        {
+            Save();
+            step++;
+        }
         time = Time.deltaTime;
         Noise();
 
@@ -95,11 +99,6 @@ public class MagnetDipole : MonoBehaviour
            Interactive();
         if (Rotation)
             RatationMagneticField();
-        if (switch_save)
-        {
-            Save();
-            step++;
-        }
     }
 
     private void Noise()
@@ -192,8 +191,9 @@ public class MagnetDipole : MonoBehaviour
 
     public void Save()
     {
-        string fileName = dirN + "/particle_collod_" + step.ToString("d5") + ".cdv";
-        sw = new StreamWriter(@fileName, false, Encoding.GetEncoding("Shift_JIS"));
+        string fileName = dirN + "/particle_colloid_" + step.ToString("d5") + ".cdv";
+        //sw = new StreamWriter(@fileName, false, Encoding.GetEncoding("Shift_JIS"));
+        StreamWriter sw = new StreamWriter(@fileName); 
 
         int s;
         for (s=0; s < particleNumber; s++)
@@ -203,9 +203,10 @@ public class MagnetDipole : MonoBehaviour
                 z = "2";
             else
                 z = "3";
-            string[] s1 = {s.ToString(), z, MagneticParticle[s].transform.position.z.ToString(), MagneticParticle[s].transform.position.x.ToString(), MagneticParticle[s].transform.position.y.ToString() };
+            string[] s1 = { s.ToString(), z, MagneticParticle[s].transform.position.z.ToString(), MagneticParticle[s].transform.position.x.ToString(), MagneticParticle[s].transform.position.y.ToString() };
             string s2 = string.Join(",", s1);
             sw.WriteLine(s2);
         }
+        sw.Close();
     }
 }
