@@ -701,7 +701,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!114 &88347119
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -730,10 +730,14 @@ MonoBehaviour:
   kai: 2.98
   ratationSpeed: 0
   Rotation: 0
-  thDist: 40
-  switch_start_mag: 1
+  thDist: 4
+  switch_start_mag: 0
   timeMag: 0
-  switch_save: 1
+  switch_save: 0
+  step: 0
+  dirN: 
+  ChangeStep: 1000
+  ChangeMag: 0.0001
 --- !u!114 &88347120
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -756,7 +760,9 @@ MonoBehaviour:
   Z_Wall2: {fileID: 1789750030}
   thickness: 1.8
   MoveSpeed: 0.2
-  timeWall: 1
+  timeWall: 0
+  step: 0
+  ChangeStep: 1000
 --- !u!4 &88347121
 Transform:
   m_ObjectHideFlags: 0
@@ -816,9 +822,9 @@ RectTransform:
   m_Father: {fileID: 1340151393}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -120}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &91990327
@@ -4293,6 +4299,10 @@ MonoBehaviour:
   switch_start_mag: 0
   timeMag: 0
   switch_save: 0
+  step: 0
+  dirN: 
+  ChangeStep: 0
+  ChangeMag: 0
 --- !u!23 &417282324
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -7119,7 +7129,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: "\u4FDD\u5B58"
+  m_Text: "\u4FDD\u5B58\u3092\u958B\u59CB"
 --- !u!222 &744672665
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -7814,6 +7824,10 @@ MonoBehaviour:
   switch_start_mag: 0
   timeMag: 0
   switch_save: 0
+  step: 0
+  dirN: 
+  ChangeStep: 0
+  ChangeMag: 0
 --- !u!114 &854590309
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7837,6 +7851,8 @@ MonoBehaviour:
   thickness: 0.00197
   MoveSpeed: 0.2
   timeWall: 0
+  step: 0
+  ChangeStep: 0
 --- !u!4 &854590310
 Transform:
   m_ObjectHideFlags: 0
@@ -9044,6 +9060,10 @@ MonoBehaviour:
   switch_start_mag: 0
   timeMag: 0
   switch_save: 0
+  step: 0
+  dirN: 
+  ChangeStep: 0
+  ChangeMag: 0
 --- !u!114 &1030593650
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -9067,6 +9087,8 @@ MonoBehaviour:
   thickness: 18
   MoveSpeed: 0.2
   timeWall: 0
+  step: 0
+  ChangeStep: 0
 --- !u!4 &1030593651
 Transform:
   m_ObjectHideFlags: 0
@@ -10646,6 +10668,10 @@ MonoBehaviour:
   switch_start_mag: 1
   timeMag: 0
   switch_save: 0
+  step: 0
+  dirN: 
+  ChangeStep: 0
+  ChangeMag: 0
 --- !u!1 &1247014966
 GameObject:
   m_ObjectHideFlags: 0
@@ -11227,6 +11253,8 @@ MonoBehaviour:
   thickness: 19.6
   MoveSpeed: 0.2
   timeWall: 0
+  step: 0
+  ChangeStep: 0
 --- !u!4 &1275423654
 Transform:
   m_ObjectHideFlags: 0
@@ -11283,6 +11311,10 @@ MonoBehaviour:
   switch_start_mag: 0
   timeMag: 0
   switch_save: 0
+  step: 0
+  dirN: 
+  ChangeStep: 0
+  ChangeMag: 0
 --- !u!1 &1278058778
 GameObject:
   m_ObjectHideFlags: 0
@@ -12380,9 +12412,9 @@ RectTransform:
   m_Father: {fileID: 1340151393}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 10, y: -213.33334}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 80, y: 80}
   m_Pivot: {x: 0, y: 0}
 --- !u!114 &1354641556
@@ -13810,6 +13842,10 @@ MonoBehaviour:
   switch_start_mag: 1
   timeMag: 0
   switch_save: 0
+  step: 0
+  dirN: 
+  ChangeStep: 0
+  ChangeMag: 0
 --- !u!1 &1445254735
 GameObject:
   m_ObjectHideFlags: 0
@@ -14151,9 +14187,9 @@ RectTransform:
   m_Father: {fileID: 1912387764}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -78.33333}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1485838659
@@ -14863,9 +14899,9 @@ RectTransform:
   m_Father: {fileID: 1912387764}
   m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -121.666664}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 30}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1570018734
@@ -15219,9 +15255,9 @@ RectTransform:
   m_Father: {fileID: 1912387764}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 170, y: -25}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 160, y: 50}
   m_Pivot: {x: 1, y: 0.5}
 --- !u!114 &1654944186
@@ -16597,9 +16633,9 @@ RectTransform:
   m_Father: {fileID: 1340151393}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 50, y: -16.666666}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 100, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1861910927
@@ -17837,7 +17873,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1933057529641737890, guid: 109bdc590ca5042d685214ba8f8464ce, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1933057529641737891, guid: 109bdc590ca5042d685214ba8f8464ce, type: 3}
       propertyPath: m_RootOrder
@@ -18706,13 +18742,14 @@ GameObject:
   - component: {fileID: 2147325637}
   - component: {fileID: 2147325636}
   - component: {fileID: 2147325635}
+  - component: {fileID: 2147325638}
   m_Layer: 5
   m_Name: SaveButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2147325634
 RectTransform:
   m_ObjectHideFlags: 0
@@ -18778,9 +18815,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1275423655}
-        m_TargetAssemblyTypeName: MagnetDipole, Assembly-CSharp
-        m_MethodName: Save
+      - m_Target: {fileID: 2147325638}
+        m_TargetAssemblyTypeName: SaveController, Assembly-CSharp
+        m_MethodName: ClickedSave
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -18828,3 +18865,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2147325633}
   m_CullTransparentMesh: 1
+--- !u!114 &2147325638
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2147325633}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 081ffe6d8b83b4dd9a7b0af50633869f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  wallController: {fileID: 88347120}
+  magnetDipole: {fileID: 88347119}

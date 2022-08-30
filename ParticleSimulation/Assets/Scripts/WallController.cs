@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using System;
+using System.IO;
 
 public class WallController : MonoBehaviour
 {
@@ -12,7 +14,18 @@ public class WallController : MonoBehaviour
     private float DPX1, DPX2, DPY1, DPY2; //defaultPosition
     private Rigidbody X1, X2, Y1, Y2;
     public bool timeWall;
-    private int step;
+
+    //Save
+    public bool switch_save_wall;
+    [HideInInspector]
+    public string dirN;
+    public StreamWriter sw;
+    public string[] WallPosition;
+    public bool didSave;
+
+    //step
+    public int step;
+    public int ChangeStep;
 
     private void Start()
     {
@@ -29,6 +42,18 @@ public class WallController : MonoBehaviour
 
         if (timeWall)
             step = 0;
+
+        if (switch_save_wall)
+        {
+            dirN = DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
+            Directory.CreateDirectory(@dirN);
+
+            string fileName = dirN + "/Wall_Position.cdv";
+            sw = new StreamWriter(@fileName);
+        }
+
+        WallPosition = new string[2*ChangeStep];
+        didSave = false;
     }
 
     void FixedUpdate()
@@ -122,8 +147,13 @@ public class WallController : MonoBehaviour
 
         if (timeWall)
         {
+            if (switch_save_wall)
+            {
+                SaveWall();
+            }
+
             step++;
-            if(step <= 1000)
+            if(step <= ChangeStep)
             {
                 X1.isKinematic = false;
                 X2.isKinematic = false;
@@ -159,11 +189,29 @@ public class WallController : MonoBehaviour
                 Y2.AddForce(-F);
             }
 
-            //if (DPX1 < X_Wall1.transform.position.x && DPX2 > X_Wall2.transform.position.x && DPY1 < Y_Wall1.transform.position.y && DPY2 > Y_Wall2.transform.position.y)
-            //{
-            //    Debug.Log("壁が初期位置へ戻ったため停止しました");
-            //    Debug.Break();
-            //}
+            if (DPX1 < X_Wall1.transform.position.x && DPX2 > X_Wall2.transform.position.x && DPY1 < Y_Wall1.transform.position.y && DPY2 > Y_Wall2.transform.position.y)
+            {
+                int s;
+
+                if (!didSave)
+                {
+                    for (s = 0; s < step; s++)
+                        sw.WriteLine(WallPosition[s]);
+
+                    sw.Close();
+                    didSave = true;
+                }
+
+                Debug.Log("壁が初期位置へ戻ったため停止しました");
+                Debug.Break();
+            }
         }
+    }
+
+    public void SaveWall()
+    {
+        string[] s1 = {string.Format("{0,5}", step.ToString()), string.Format("{0,8}", X_Wall1.transform.position.x.ToString("F4")), string.Format("{0,8}", X_Wall2.transform.position.x.ToString("F4")), string.Format("{0,8}", Y_Wall1.transform.position.y.ToString("F4")), string.Format("{0,8}", Y_Wall2.transform.position.y.ToString("F4")) };
+        string s2 = string.Join(" ", s1);
+        WallPosition[step] = s2;
     }
 }

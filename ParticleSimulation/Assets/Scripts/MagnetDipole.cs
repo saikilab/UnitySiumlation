@@ -47,9 +47,14 @@ public class MagnetDipole : MonoBehaviour
     public bool timeMag;
 
     //Save
-    public bool switch_save;
-    private int step;
-    private string dirN;
+    public bool switch_save_mag;
+    public int step;
+    [HideInInspector]
+    public string dirN;
+
+    //step
+    public int ChangeStep;
+    public float ChangeMag;
 
     private void Start()
     {
@@ -85,18 +90,20 @@ public class MagnetDipole : MonoBehaviour
             OFFMag();
         shita_y = 30 * pi / 180;
 
-        if (switch_save)
+        if (switch_save_mag)
         {
             dirN = DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
+            Directory.CreateDirectory(@dirN);
+            dirN = dirN + "/particles";
             Directory.CreateDirectory(@dirN);
         }
     }
 
     private void FixedUpdate()
     {
-        if (switch_save) //ファイル出力切り替え
+        if (switch_save_mag) //ファイル出力切り替え
         {
-            Save();
+            SaveMag();
             step++;
         }
 
@@ -109,14 +116,17 @@ public class MagnetDipole : MonoBehaviour
 
         if (timeMag) //時間変化磁場切り替え
         {
-            if (step <= 1000) //1000ステップまでは増加 0~0.1
-                H_pow = (float)step / 10000;
+            if (step <= ChangeStep) //ChangeStepまでChangeMagずつ増加
+                H_pow = (float)step*ChangeMag;
             else
-                H_pow = 0.2f - (float)step / 10000;
+                H_pow = 0.2f - (float)step*ChangeMag;
             ChangeMagneticField();
         }
-        if (2000 < step) //2000ステップで停止
+        if (2*ChangeStep < step)//2*ChangeStepで停止
+        {
+            Debug.Log("指定のステップ数実行が完了したため停止しました");
             Debug.Break();
+        }         
     }
 
     private void Noise()
@@ -210,11 +220,10 @@ public class MagnetDipole : MonoBehaviour
         M2 = M1;
     }
 
-    public void Save()
+    public void SaveMag()
     {
         string fileName = dirN + "/particle_colloid_" + step.ToString("d5") + ".cdv";
-        //sw = new StreamWriter(@fileName, false, Encoding.GetEncoding("Shift_JIS"));
-        StreamWriter sw = new StreamWriter(@fileName); 
+        StreamWriter sw = new StreamWriter(@fileName);
 
         int s;
         for (s=0; s < particleNumber; s++)
