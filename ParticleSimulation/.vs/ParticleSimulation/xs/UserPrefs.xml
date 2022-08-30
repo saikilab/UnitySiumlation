@@ -1,8 +1,8 @@
 ﻿<Properties StartupConfiguration="{3EF46B08-A5A1-5455-5F7D-E48F1A9E72EC}|">
   <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MagnetDipole.cs">
     <Files>
-      <File FileName="Assets/Scripts/SetParticle.cs" Line="39" Column="46" />
-      <File FileName="Assets/Scripts/MagnetDipole.cs" Line="196" Column="56" />
+      <File FileName="Assets/Scripts/SetParticle.cs" Line="19" Column="40" />
+      <File FileName="Assets/Scripts/MagnetDipole.cs" Line="137" Column="22" />
       <File FileName="Assets/Scripts/GetInfo.cs" />
       <File FileName="Assets/Scripts/WallController.cs" />
       <File FileName="Assets/Scripts/ChangeParticleColor.cs" />
@@ -16,7 +16,7 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Unuse" expanded="True" />
-                <Node name="MagnetDipole.cs" selected="True" />
+                <Node name="SetParticle.cs" selected="True" />
               </Node>
             </Node>
           </Node>

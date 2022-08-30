@@ -39,8 +39,12 @@ public class MagnetDipole : MonoBehaviour
     public float thDist;
 
     //Math value
+    public bool switch_start_mag;
     private float pi;
     private int i, j;
+
+    //Time Change Mag
+    public bool timeMag;
 
     //Save
     public bool switch_save;
@@ -75,7 +79,10 @@ public class MagnetDipole : MonoBehaviour
             MagneticParticleRB[i] = MagneticParticle[i].GetComponent<Rigidbody>();
         }
         BeforPosition = new Vector3[particleNumber];
-        OFFMag();
+        if (switch_start_mag)
+            ONMag();
+        else
+            OFFMag();
         shita_y = 30 * pi / 180;
 
         if (switch_save)
@@ -87,18 +94,29 @@ public class MagnetDipole : MonoBehaviour
 
     private void FixedUpdate()
     {
-        if (switch_save)
+        if (switch_save) //ファイル出力切り替え
         {
             Save();
             step++;
         }
-        time = Time.deltaTime;
-        Noise();
 
-        if (H_pow != 0)
-           Interactive();
-        if (Rotation)
+        time = Time.deltaTime; //ステップ時間
+        Noise(); //ブラウン運動
+        Interactive(); //磁気相互作用
+
+        if (Rotation) //回転磁場切り替え
             RatationMagneticField();
+
+        if (timeMag) //時間変化磁場切り替え
+        {
+            if (step <= 1000) //1000ステップまでは増加 0~0.1
+                H_pow = (float)step / 10000;
+            else
+                H_pow = 0.2f - (float)step / 10000;
+            ChangeMagneticField();
+        }
+        if (2000 < step) //2000ステップで停止
+            Debug.Break();
     }
 
     private void Noise()
@@ -106,6 +124,7 @@ public class MagnetDipole : MonoBehaviour
         float x, y, z, sigma=1;
         int n;
         Vector3 brown, nowPosition;
+
         for (n = 0; n < particleNumber; n++)
         {
             nowPosition = MagneticParticle[n].transform.position;
@@ -113,6 +132,8 @@ public class MagnetDipole : MonoBehaviour
             x = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
             y = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
             z = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
+
+            //ランジュバン方程式
             x = -beta * V.x + x * randomForce * time;
             y = -beta * V.y + y * randomForce * time;
             z = -beta * V.z + z * randomForce * time;
@@ -203,8 +224,8 @@ public class MagnetDipole : MonoBehaviour
                 z = "2";
             else
                 z = "3";
-            string[] s1 = { s.ToString(), z, MagneticParticle[s].transform.position.z.ToString(), MagneticParticle[s].transform.position.x.ToString(), MagneticParticle[s].transform.position.y.ToString() };
-            string s2 = string.Join(",", s1);
+            string[] s1 = { string.Format("{0, 4}", s.ToString()), z, string.Format("{0,7}", MagneticParticle[s].transform.position.z.ToString("F4")), string.Format("{0,7}", MagneticParticle[s].transform.position.x.ToString("F4")), string.Format("{0,7}", MagneticParticle[s].transform.position.y.ToString("F4")), };
+            string s2 = string.Join(" ", s1);
             sw.WriteLine(s2);
         }
         sw.Close();

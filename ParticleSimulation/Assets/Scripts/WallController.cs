@@ -11,6 +11,8 @@ public class WallController : MonoBehaviour
 
     private float DPX1, DPX2, DPY1, DPY2; //defaultPosition
     private Rigidbody X1, X2, Y1, Y2;
+    public bool timeWall;
+    private int step;
 
     private void Start()
     {
@@ -24,9 +26,12 @@ public class WallController : MonoBehaviour
         X2 = X_Wall2.GetComponent<Rigidbody>();
         Y1 = Y_Wall1.GetComponent<Rigidbody>();
         Y2 = Y_Wall2.GetComponent<Rigidbody>();
+
+        if (timeWall)
+            step = 0;
     }
 
-    void Update()
+    void FixedUpdate()
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
@@ -113,6 +118,52 @@ public class WallController : MonoBehaviour
             X2.isKinematic = true;
             Y1.isKinematic = true;
             Y2.isKinematic = true;
+        }
+
+        if (timeWall)
+        {
+            step++;
+            if(step <= 1000)
+            {
+                X1.isKinematic = false;
+                X2.isKinematic = false;
+                Y1.isKinematic = false;
+                Y2.isKinematic = false;
+
+                X1.AddForce(-F);
+                X2.AddForce(F);
+                Y1.AddForce(-F);
+                Y2.AddForce(F);
+            } else
+            {
+                if (DPX1 < X_Wall1.transform.position.x)
+                    X1.isKinematic = true;
+                else
+                    X1.isKinematic = false;
+                if (DPX2 > X_Wall2.transform.position.x)
+                    X2.isKinematic = true;
+                else
+                    X2.isKinematic = false;
+                if (DPY1 < Y_Wall1.transform.position.y)
+                    Y1.isKinematic = true;
+                else
+                    Y1.isKinematic = false;
+                if (DPY2 > Y_Wall2.transform.position.y)
+                    Y2.isKinematic = true;
+                else
+                    Y2.isKinematic = false;
+
+                X1.AddForce(F);
+                X2.AddForce(-F);
+                Y1.AddForce(F);
+                Y2.AddForce(-F);
+            }
+
+            //if (DPX1 < X_Wall1.transform.position.x && DPX2 > X_Wall2.transform.position.x && DPY1 < Y_Wall1.transform.position.y && DPY2 > Y_Wall2.transform.position.y)
+            //{
+            //    Debug.Log("壁が初期位置へ戻ったため停止しました");
+            //    Debug.Break();
+            //}
         }
     }
 }
