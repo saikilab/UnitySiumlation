@@ -122,11 +122,11 @@ public class MagnetDipole : MonoBehaviour
                 H_pow = 0.2f - (float)step*ChangeMag;
             ChangeMagneticField();
         }
-        if (2*ChangeStep < step)//2*ChangeStepで停止
-        {
-            Debug.Log("指定のステップ数実行が完了したため停止しました");
-            Debug.Break();
-        }         
+        //if (2*ChangeStep < step)//2*ChangeStepで停止
+        //{
+        //    Debug.Log("指定のステップ数実行が完了したため停止しました");
+        //    Debug.Break();
+        //}         
     }
 
     private void Noise()
