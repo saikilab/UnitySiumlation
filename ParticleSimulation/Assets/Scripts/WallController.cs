@@ -136,14 +136,14 @@ public class WallController : MonoBehaviour
             Y1.AddForce(F);
             Y2.AddForce(-F);
         }
-        else
-        {
-            //ボタンを押していない時は動かない
-            X1.isKinematic = true;
-            X2.isKinematic = true;
-            Y1.isKinematic = true;
-            Y2.isKinematic = true;
-        }
+        //else
+        //{
+        //    //ボタンを押していない時は動かない
+        //    X1.isKinematic = true;
+        //    X2.isKinematic = true;
+        //    Y1.isKinematic = true;
+        //    Y2.isKinematic = true;
+        //}
 
         if (timeWall)
         {
