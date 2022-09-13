@@ -11475,7 +11475,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 850618f9ef2814af89e38621a8f3b7fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  setParticleN: 400
+  setParticleN: 1
   set: 1
   Wall: {fileID: 88347118}
   diameter: 1
