@@ -131,7 +131,7 @@ public class MagnetDipole : MonoBehaviour
 
     private void Noise()
     {
-        float x, y, z, sigma=1;
+        float x, y, z;
         int n;
         Vector3 brown, nowPosition;
 
@@ -139,16 +139,16 @@ public class MagnetDipole : MonoBehaviour
         {
             nowPosition = MagneticParticle[n].transform.position;
             V = (nowPosition - BeforPosition[n]) / time;
-            x = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
-            y = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
-            z = sigma * Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
+            x = Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
+            y = Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
+            z = Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * pi * UnityEngine.Random.Range(0f, 1.0f));
 
             //ランジュバン方程式
             x = -beta * V.x + x * randomForce * time;
             y = -beta * V.y + y * randomForce * time;
             z = -beta * V.z + z * randomForce * time;
             brown = new Vector3(x, y, z);
-            MagneticParticleRB[n].AddForce(brown);
+            MagneticParticleRB[n].AddForce(brown, ForceMode.Impulse);
             BeforPosition[n] = nowPosition;
         }
     }
