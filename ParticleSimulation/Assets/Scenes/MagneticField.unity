@@ -803,7 +803,7 @@ MonoBehaviour:
   particleNumber: 0
   diameter: 1
   time: 0
-  randomForce: 100
+  randomForce: 10
   beta: 0.1
   H_pow: 0
   default_H_pow: 0.09
