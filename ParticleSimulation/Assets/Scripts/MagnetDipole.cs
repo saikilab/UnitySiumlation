@@ -79,11 +79,12 @@ public class MagnetDipole : MonoBehaviour
         q = kai * H_pow;
 
         MagneticParticleRB = new Rigidbody[particleNumber];
+        BeforPosition = new Vector3[particleNumber];
         for (i = 0; i < particleNumber; i++)
         {
             MagneticParticleRB[i] = MagneticParticle[i].GetComponent<Rigidbody>();
+            BeforPosition[i] = MagneticParticle[i].transform.position;
         }
-        BeforPosition = new Vector3[particleNumber];
         if (switch_start_mag)
             ONMag();
         else
@@ -122,11 +123,6 @@ public class MagnetDipole : MonoBehaviour
                 H_pow = 0.2f - (float)step*ChangeMag;
             ChangeMagneticField();
         }
-        //if (2*ChangeStep < step)//2*ChangeStepで停止
-        //{
-        //    Debug.Log("指定のステップ数実行が完了したため停止しました");
-        //    Debug.Break();
-        //}         
     }
 
     private void Noise()

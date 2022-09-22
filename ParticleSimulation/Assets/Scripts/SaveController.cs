@@ -18,7 +18,7 @@ public class SaveController : MonoBehaviour
         SavePanel.SetActive(true);
     }
 
-    public void ClickedFullWall()
+    public void StandardSave()
     {
         SavePanel.SetActive(false);
         dirN = DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
@@ -32,27 +32,23 @@ public class SaveController : MonoBehaviour
         magnetDipole.step = 0;
         magnetDipole.switch_save_mag = true;
         wallController.switch_save_wall = true;
+    }
 
-        //FullWall
+    public void ClickedFullWall()
+    {
+        StandardSave();
         wallController.timeWall = true;
     }
 
     public void ClickedPiston()
     {
-        SavePanel.SetActive(false);
-        dirN = DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
-        Directory.CreateDirectory(dirN);
-        Directory.CreateDirectory(dirN + "/particles");
-        magnetDipole.dirN = dirN + "/particles";
-        wallController.dirN = dirN;
-        wallController.sw = new StreamWriter(dirN + "/Wall_Position.cdv");
-
-        wallController.step = 0;
-        magnetDipole.step = 0;
-        magnetDipole.switch_save_mag = true;
-        wallController.switch_save_wall = true;
-
-        //Piston
+        StandardSave();
         wallController.pistonWall = true;
+    }
+
+    public void ClickedRepeat()
+    {
+        StandardSave();
+        wallController.repeatWall = true;
     }
 }
