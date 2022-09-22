@@ -13,7 +13,7 @@ public class WallController : MonoBehaviour
 
     private float DPX1, DPX2, DPY1, DPY2; //defaultPosition
     private Rigidbody X1, X2, Y1, Y2;
-    public bool timeWall, pistonWall;
+    public bool timeWall, pistonWall, repeatWall;
 
     //Save
     public bool switch_save_wall;
@@ -26,6 +26,8 @@ public class WallController : MonoBehaviour
     //step
     public int step;
     public int ChangeStep;
+    public int repeatNumber;
+    private int repeatCounter;
 
     private void Start()
     {
@@ -39,9 +41,7 @@ public class WallController : MonoBehaviour
         X2 = X_Wall2.GetComponent<Rigidbody>();
         Y1 = Y_Wall1.GetComponent<Rigidbody>();
         Y2 = Y_Wall2.GetComponent<Rigidbody>();
-
-        if (timeWall)
-            step = 0;
+        step = 0;
 
         if (switch_save_wall)
         {
@@ -60,39 +60,16 @@ public class WallController : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            X1.isKinematic = true;
-            X_Wall1.transform.Translate(-MoveSpeed, 0, 0);
-            X_Wall2.transform.Translate(MoveSpeed, 0, 0);
-            Y_Wall1.transform.Translate(0, -MoveSpeed, 0);
-            Y_Wall2.transform.Translate(0, MoveSpeed, 0);
-
-            change_Z_Wall = Z_Wall1.transform.localScale;
-            change_Z_Wall.x -= 2 * MoveSpeed;
-            change_Z_Wall.y -= 2 * MoveSpeed;
-            Z_Wall1.transform.localScale = change_Z_Wall;
-            change_Z_Wall = Z_Wall2.transform.localScale;
-            change_Z_Wall.x -= 2 * MoveSpeed;
-            change_Z_Wall.y -= 2 * MoveSpeed;
-            Z_Wall2.transform.localScale = change_Z_Wall;
+            MoveWall();
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
             if (X_Wall1.transform.position.x < DPX1 && DPX2 < X_Wall2.transform.position.x)
             {
-                X1.isKinematic = true;
                 X_Wall1.transform.Translate(MoveSpeed, 0, 0);
                 X_Wall2.transform.Translate(-MoveSpeed, 0, 0);
                 Y_Wall1.transform.Translate(0, MoveSpeed, 0);
                 Y_Wall2.transform.Translate(0, -MoveSpeed, 0);
-
-                change_Z_Wall = Z_Wall1.transform.localScale;
-                change_Z_Wall.x += 2 * MoveSpeed;
-                change_Z_Wall.y += 2 * MoveSpeed;
-                Z_Wall1.transform.localScale = change_Z_Wall;
-                change_Z_Wall = Z_Wall2.transform.localScale;
-                change_Z_Wall.x += 2 * MoveSpeed;
-                change_Z_Wall.y += 2 * MoveSpeed;
-                Z_Wall2.transform.localScale = change_Z_Wall;
             }
         }
 
@@ -100,15 +77,7 @@ public class WallController : MonoBehaviour
         {
             //上ボタンで縮小
             //移動可能へ
-            X1.isKinematic = false;
-            X2.isKinematic = false;
-            Y1.isKinematic = false;
-            Y2.isKinematic = false;
-
-            X1.AddForce(-F);
-            X2.AddForce(F);
-            Y1.AddForce(-F);
-            Y2.AddForce(F);
+            PushWall();
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
@@ -136,14 +105,6 @@ public class WallController : MonoBehaviour
             Y1.AddForce(F);
             Y2.AddForce(-F);
         }
-        //else
-        //{
-        //    //ボタンを押していない時は動かない
-        //    X1.isKinematic = true;
-        //    X2.isKinematic = true;
-        //    Y1.isKinematic = true;
-        //    Y2.isKinematic = true;
-        //}
 
         if (timeWall)
         {
@@ -163,6 +124,36 @@ public class WallController : MonoBehaviour
 
             PistonWall();
         }
+        else if (repeatWall)
+        {
+            if (switch_save_wall)
+            {
+                SaveWall();
+            }
+
+            RepeatPosWall();
+        }
+    }
+
+    public void MoveWall()
+    {
+        X_Wall1.transform.Translate(-MoveSpeed, 0, 0);
+        X_Wall2.transform.Translate(MoveSpeed, 0, 0);
+        Y_Wall1.transform.Translate(0, -MoveSpeed, 0);
+        Y_Wall2.transform.Translate(0, MoveSpeed, 0);
+    }
+
+    public void PushWall()
+    {
+        X1.isKinematic = false;
+        X2.isKinematic = false;
+        Y1.isKinematic = false;
+        Y2.isKinematic = false;
+
+        X1.AddForce(-F);
+        X2.AddForce(F);
+        Y1.AddForce(-F);
+        Y2.AddForce(F);
     }
 
     public void SaveWall()
@@ -177,15 +168,7 @@ public class WallController : MonoBehaviour
         step++;
         if (step <= ChangeStep)
         {
-            X1.isKinematic = false;
-            X2.isKinematic = false;
-            Y1.isKinematic = false;
-            Y2.isKinematic = false;
-
-            X1.AddForce(-F);
-            X2.AddForce(F);
-            Y1.AddForce(-F);
-            Y2.AddForce(F);
+            PushWall();
         }
         else
         {
@@ -257,6 +240,34 @@ public class WallController : MonoBehaviour
                 Debug.Log("壁が初期位置へ戻ったため停止しました");
                 Debug.Break();
             }
+        }
+    }
+
+    public void RepeatPosWall()
+    {
+        step++;
+        MoveWall();
+        if (step % ChangeStep == 0)
+        {
+            MoveSpeed = -MoveSpeed;
+        }
+
+        repeatCounter = step / (2 * ChangeStep);
+
+        int s;
+        if(repeatCounter == repeatNumber)
+        {
+            if (!didSave)
+            {
+                for (s = 0; s < step; s++)
+                    sw.WriteLine(WallPosition[s]);
+
+                sw.Close();
+                didSave = true;
+            }
+
+            Debug.Log("指定回数実行したため停止しました");
+            Debug.Break();
         }
     }
 }
