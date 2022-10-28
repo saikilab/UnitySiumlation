@@ -6,28 +6,24 @@ using System.IO;
 
 public class WallController : MonoBehaviour
 {
-    public Vector3 F, change_Z_Wall;
-    public GameObject X_Wall1, X_Wall2, Y_Wall1, Y_Wall2, Z_Wall1, Z_Wall2;
-    public float thickness;
-    public float MoveSpeed;
-
+    //simulation value
     private float DPX1, DPX2, DPY1, DPY2; //defaultPosition
     private Rigidbody X1, X2, Y1, Y2;
-    public bool timeWall, pistonWall, repeatWall;
-
-    //Save
-    public bool switch_save_wall;
-    [HideInInspector]
-    public string dirN;
-    public StreamWriter sw;
-    public string[] WallPosition;
-    public bool didSave;
-
-    //step
+    public GameObject X_Wall1, X_Wall2, Y_Wall1, Y_Wall2, Z_Wall1, Z_Wall2;
     public int step;
     public int ChangeStep;
     public int repeatNumber;
-    private int repeatCounter;
+    [HideInInspector] public int repeatCounter;
+    public float thickness;
+    public float MoveSpeed;
+    private Vector3 RecPow;
+    public Vector3 MovePower, V0;
+    public bool useTimeWall, usePistonWall, useRepeatWall, useEFM; //壁の挙動 切り替え
+
+    //Save
+    //public bool useSaveWall; //壁の保存　切り替え
+    [HideInInspector] public string[] WallPosition;
+    [HideInInspector] public string[] Fp;
 
     private void Start()
     {
@@ -35,125 +31,114 @@ public class WallController : MonoBehaviour
         DPX2 = X_Wall2.transform.position.x;
         DPY1 = Y_Wall1.transform.position.y;
         DPY2 = Y_Wall2.transform.position.y;
-        Z_Wall1.transform.localPosition = new Vector3(0, 0, thickness / 2f);
-        Z_Wall2.transform.localPosition = new Vector3(0, 0, -thickness / 2f);
+        Z_Wall1.transform.localPosition = new Vector3(0, 0, (thickness+Z_Wall1.transform.localScale.z) / 2f);
+        Z_Wall2.transform.localPosition = new Vector3(0, 0, -(thickness+Z_Wall2.transform.localScale.z) / 2f);
         X1 = X_Wall1.GetComponent<Rigidbody>();
         X2 = X_Wall2.GetComponent<Rigidbody>();
         Y1 = Y_Wall1.GetComponent<Rigidbody>();
         Y2 = Y_Wall2.GetComponent<Rigidbody>();
         step = 0;
 
-        if (switch_save_wall)
-        {
-            dirN = DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
-            Directory.CreateDirectory(@dirN);
-
-            string fileName = dirN + "/Wall_Position.cdv";
-            sw = new StreamWriter(@fileName);
-        }
-
-        WallPosition = new string[10000];
-        didSave = false;
+        WallPosition = new string[SimulationController.MaxStep]; //最大ステップを10000と仮置き
+        Fp = new string[SimulationController.MaxStep];
     }
 
     void FixedUpdate()
     {
+        step = SimulationController.Step;
+
+        StopOverWall();
+
+        //左右で位置制御
         if (Input.GetKey(KeyCode.RightArrow))
         {
-            MoveWall();
+            MoveWallPos(MoveSpeed);
         }
         if (Input.GetKey(KeyCode.LeftArrow))
         {
-            if (X_Wall1.transform.position.x < DPX1 && DPX2 < X_Wall2.transform.position.x)
-            {
-                X_Wall1.transform.Translate(MoveSpeed, 0, 0);
-                X_Wall2.transform.Translate(-MoveSpeed, 0, 0);
-                Y_Wall1.transform.Translate(0, MoveSpeed, 0);
-                Y_Wall2.transform.Translate(0, -MoveSpeed, 0);
-            }
+            MoveWallPos(-MoveSpeed);
         }
 
+        //上下で力制御
         if (Input.GetKey(KeyCode.UpArrow))
         {
-            //上ボタンで縮小
-            //移動可能へ
-            PushWall();
+            AdmitMoveWall();
+            MoveWallF(MovePower);
         }
         else if (Input.GetKey(KeyCode.DownArrow))
         {
-            //下ボタンで拡大
-            //初期値を超える場合は停止
-            if (DPX1 < X_Wall1.transform.position.x)
-                X1.isKinematic = true;
-            else
-                X1.isKinematic = false;
-            if (DPX2 > X_Wall2.transform.position.x)
-                X2.isKinematic = true;
-            else
-                X2.isKinematic = false;
-            if (DPY1 < Y_Wall1.transform.position.y)
-                Y1.isKinematic = true;
-            else
-                Y1.isKinematic = false;
-            if (DPY2 > Y_Wall2.transform.position.y)
-                Y2.isKinematic = true;
-            else
-                Y2.isKinematic = false;
-
-            X1.AddForce(F);
-            X2.AddForce(-F);
-            Y1.AddForce(F);
-            Y2.AddForce(-F);
+            MoveWallF(-MovePower);
         }
 
-        if (timeWall)
+        //保存処理
+        //右壁が受ける力を取得、初期化
+        RecPow = WallReceivePow.Fp;
+        WallReceivePow.Fp = new Vector3(0, 0, 0);
+        if (useTimeWall)
         {
-            if (switch_save_wall)
-            {
-                SaveWall();
-            }
-
+            //if (useSaveWall)
+            SaveWall();
+            SaveFp();
             TimeWall();
         }
-        else if (pistonWall)
+        else if (usePistonWall)
         {
-            if (switch_save_wall)
-            {
-                SaveWall();
-            }
-
+            //if (useSaveWall)
+            SaveWall();
+            SaveFp();
             PistonWall();
         }
-        else if (repeatWall)
+        else if (useRepeatWall)
         {
-            if (switch_save_wall)
-            {
-                SaveWall();
-            }
-
+            //if (useSaveWall)
+            SaveWall();
+            SaveFp();
             RepeatPosWall();
+        }
+        else if (useEFM)
+        {
+            //if (useSaveWall)
+            SaveWall();
+            SaveFp();
+            SaveFp();
+            ElasticForceMeasure();
         }
     }
 
-    public void MoveWall()
+    public void MoveWallPos(float moveSpeed) //位置制御
     {
-        X_Wall1.transform.Translate(-MoveSpeed, 0, 0);
-        X_Wall2.transform.Translate(MoveSpeed, 0, 0);
-        Y_Wall1.transform.Translate(0, -MoveSpeed, 0);
-        Y_Wall2.transform.Translate(0, MoveSpeed, 0);
+        X_Wall1.transform.Translate(-moveSpeed, 0, 0);
+        X_Wall2.transform.Translate(moveSpeed, 0, 0);
+        Y_Wall1.transform.Translate(0, -moveSpeed, 0);
+        Y_Wall2.transform.Translate(0, moveSpeed, 0);
     }
 
-    public void PushWall()
+    public void MoveWallF(Vector3 movePower) //力制御
+    {
+        X1.AddForce(-movePower, ForceMode.VelocityChange);
+        X2.AddForce(movePower, ForceMode.VelocityChange);
+        Y1.AddForce(-movePower, ForceMode.VelocityChange);
+        Y2.AddForce(movePower, ForceMode.VelocityChange);
+    }
+
+    public void StopOverWall() //初期位置を超える場合は壁を停止
+    {
+        if (DPX1 <= X_Wall1.transform.position.x)
+            X1.isKinematic = true;
+        if (DPX2 >= X_Wall2.transform.position.x)
+            X2.isKinematic = true;
+        if (DPY1 <= Y_Wall1.transform.position.y)
+            Y1.isKinematic = true;
+        if (DPY2 >= Y_Wall2.transform.position.y)
+            Y2.isKinematic = true;
+    }
+
+    public void AdmitMoveWall() //壁の移動を許可
     {
         X1.isKinematic = false;
         X2.isKinematic = false;
         Y1.isKinematic = false;
         Y2.isKinematic = false;
-
-        X1.AddForce(-F);
-        X2.AddForce(F);
-        Y1.AddForce(-F);
-        Y2.AddForce(F);
     }
 
     public void SaveWall()
@@ -163,111 +148,121 @@ public class WallController : MonoBehaviour
         WallPosition[step] = s2;
     }
 
-    public void TimeWall()
+    public void SaveFp()
     {
-        step++;
-        if (step <= ChangeStep)
+        string[] s1 = {step.ToString(), RecPow.x.ToString()};
+        string s2 = string.Join(",", s1);
+        Fp[step] = s2;
+    }
+
+    public void TimeWall() //指定ステップまで力で圧縮、拡大
+    {
+        if (step == ChangeStep) //切り替えの瞬間に一度力を停止
         {
-            PushWall();
+            X1.isKinematic = true;
+            X2.isKinematic = true;
+            Y1.isKinematic = true;
+            Y2.isKinematic = true;
+        }
+
+        if (step < ChangeStep)
+        {
+            AdmitMoveWall();
+            MoveWallF(MovePower);
         }
         else
         {
-            if (DPX1 < X_Wall1.transform.position.x)
-                X1.isKinematic = true;
-            else
-                X1.isKinematic = false;
-            if (DPX2 > X_Wall2.transform.position.x)
-                X2.isKinematic = true;
-            else
-                X2.isKinematic = false;
-            if (DPY1 < Y_Wall1.transform.position.y)
-                Y1.isKinematic = true;
-            else
-                Y1.isKinematic = false;
-            if (DPY2 > Y_Wall2.transform.position.y)
-                Y2.isKinematic = true;
-            else
-                Y2.isKinematic = false;
+            AdmitMoveWall();
+            MoveWallF(-MovePower);
+            StopOverWall();
 
-            X1.AddForce(F);
-            X2.AddForce(-F);
-            Y1.AddForce(F);
-            Y2.AddForce(-F);
-        }
-
-        if (DPX1 < X_Wall1.transform.position.x && DPX2 > X_Wall2.transform.position.x && DPY1 < Y_Wall1.transform.position.y && DPY2 > Y_Wall2.transform.position.y)
-        {
-            int s;
-            if (!didSave)
+            //全ての壁が初期位置を超えたら停止
+            if (DPX1 <= X_Wall1.transform.position.x && DPX2 >= X_Wall2.transform.position.x && DPY1 <= Y_Wall1.transform.position.y && DPY2 >= Y_Wall2.transform.position.y)
             {
-                for (s = 0; s < step; s++)
-                    sw.WriteLine(WallPosition[s]);
-
-                sw.Close();
-                didSave = true;
-            }
-
-            Debug.Log("壁が初期位置へ戻ったため停止しました");
-            Debug.Break();
-        }
-    }
-
-    public void PistonWall()
-    {
-        step++;
-        if (step <= ChangeStep) //指定ステップまで押し込み
-        {
-            X1.isKinematic = false;
-
-            X1.AddForce(-F);
-        }
-        else //指定ステップ以降は放置
-        {
-            X1.isKinematic = false;
-
-            if (DPX1 < X_Wall1.transform.position.x) //初期位置を超えたら停止
-            {
-                if (!didSave)
-                {
-                    int s;
-                    for (s = 0; s < step; s++)
-                        sw.WriteLine(WallPosition[s]);
-
-                    sw.Close();
-                    didSave = true;
-                }
-
                 Debug.Log("壁が初期位置へ戻ったため停止しました");
-                Debug.Break();
+                SimulationController.endSimulation = true;
+                useTimeWall = false;
+                //useSaveWall = false;
+                SetDP();
             }
         }
     }
 
-    public void RepeatPosWall()
+
+    public void PistonWall() //指定ステップまで力で圧縮、放置
     {
-        step++;
-        MoveWall();
-        if (step % ChangeStep == 0)
+        X1.isKinematic = false;
+        if (step < ChangeStep) //圧縮
         {
-            MoveSpeed = -MoveSpeed;
+            X1.AddForce(-MovePower);
+        }
+        else //放置
+        {
+            //右壁が初期位置を超えたら停止
+            if (DPX1 < X_Wall1.transform.position.x)
+            {
+                Debug.Log("壁が初期位置へ戻ったため停止しました");
+                SimulationController.endSimulation = true;
+                usePistonWall = false;
+                //useSaveWall = false;
+                SetDP();
+            }
+        }
+    }
+
+    public void ElasticForceMeasure() //弾性力測定
+    {
+        X1.isKinematic = false;
+        if(step == 0) //初速
+        {
+            X1.AddForce(V0, ForceMode.VelocityChange);
         }
 
+        if (step < ChangeStep) //圧縮
+        {
+            Vector3 V1 = V0 - X1.velocity;
+            X1.AddForce(V1, ForceMode.VelocityChange);
+            X1.AddForce(RecPow, ForceMode.Impulse);
+        }
+        else //放置
+        {
+            //右壁が初期位置を超えたら停止
+            if (DPX1 < X_Wall1.transform.position.x)
+            {
+                Debug.Log("壁が初期位置へ戻ったため停止しました");
+                SimulationController.endSimulation = true;
+                useEFM = false;
+                //useSaveWall = false;
+                SetDP();
+            }
+        }
+    }
+
+    public void RepeatPosWall() //指定回数 位置で圧縮、拡大
+    {
         repeatCounter = step / (2 * ChangeStep);
 
-        int s;
+        if (step - ChangeStep * repeatCounter * 2 < ChangeStep)
+            MoveWallPos(MoveSpeed);
+        else
+            MoveWallPos(-MoveSpeed);
+
+        //指定回数実行したら停止
         if(repeatCounter == repeatNumber)
         {
-            if (!didSave)
-            {
-                for (s = 0; s < step; s++)
-                    sw.WriteLine(WallPosition[s]);
-
-                sw.Close();
-                didSave = true;
-            }
-
             Debug.Log("指定回数実行したため停止しました");
-            Debug.Break();
+            SimulationController.endSimulation = true;
+            useRepeatWall = false;
+            //useSaveWall = false;
+            SetDP();
         }
+    }
+
+    void SetDP()
+    {
+        X_Wall1.transform.position = new Vector3(DPX1, 0, 0);
+        X_Wall2.transform.position = new Vector3(DPX2, 0, 0);
+        Y_Wall1.transform.position = new Vector3(0, DPY1, 0);
+        Y_Wall2.transform.position = new Vector3(0, DPY2, 0);
     }
 }

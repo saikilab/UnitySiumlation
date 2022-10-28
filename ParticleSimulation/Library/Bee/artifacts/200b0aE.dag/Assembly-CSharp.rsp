@@ -339,18 +339,20 @@
 -r:"Library/Bee/artifacts/200b0aE.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/ChangeParticleColor.cs"
 "Assets/Scripts/GetInfo.cs"
-"Assets/Scripts/MagnetDipole.cs"
+"Assets/Scripts/ParticleController.cs"
 "Assets/Scripts/SaveController.cs"
 "Assets/Scripts/SetParticle.cs"
+"Assets/Scripts/SimulationController.cs"
 "Assets/Scripts/SphereWall.cs"
 "Assets/Scripts/Unuse/ChangeCamera.cs"
 "Assets/Scripts/Unuse/MagneticField.cs"
 "Assets/Scripts/Unuse/MagneticForceController.cs"
 "Assets/Scripts/Unuse/MagneticForceController2.cs"
-"Assets/Scripts/Unuse/ParticleController.cs"
+"Assets/Scripts/Unuse/ParticleController0.cs"
 "Assets/Scripts/Unuse/ParticleController2.cs"
-"Assets/Scripts/Unuse/SimulationController.cs"
+"Assets/Scripts/Unuse/SimulationController0.cs"
 "Assets/Scripts/WallController.cs"
+"Assets/Scripts/WallReceivePow.cs"
 -langversion:9.0
 
 /deterministic

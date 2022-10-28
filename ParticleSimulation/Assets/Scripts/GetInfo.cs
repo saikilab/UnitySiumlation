@@ -5,24 +5,29 @@ using UnityEngine.UI;
 
 public class GetInfo : MonoBehaviour
 {
+    ParticleController particleController;
+    WallController wallController;
     public GameObject Wall;
-    public Text WallInfo, ParticleN, MagneticField;
-    private float size;
+    public Rigidbody RightWall;
+    public Text WallInfo, ParticleN, MagneticField, WallSpeed, Step, RepeatNumber;
+    private float size, F;
     bool delay;
 
     private void Start()
     {
+        particleController = Wall.GetComponent<ParticleController>();
+        wallController = Wall.GetComponent<WallController>();
         delay = true;
     }
 
-    private void Update()
+    private void FixedUpdate()
     {
         if (delay)
         {
             delay = false;
             if (Wall.tag == "Square")
             {
-                size = Wall.GetComponent<WallController>().thickness;
+                size = wallController.thickness;
                 WallInfo.text = "形状：正方形\n厚さ：" + size;
             }
             if (Wall.tag == "Sphere")
@@ -30,13 +35,15 @@ public class GetInfo : MonoBehaviour
                 size = Wall.transform.localScale.x;
                 WallInfo.text = "形状：球体\n直径：" + size;
             }
-            ParticleN.text = "粒子数：" + Wall.GetComponent<MagnetDipole>().particleNumber;
-            UpdateMagInfo();
+            ParticleN.text = "粒子数：" + particleController.particleNumber;
         }
-    }
 
-    public void UpdateMagInfo()
-    {
-        MagneticField.text = "磁場：" + Wall.GetComponent<MagnetDipole>().H_pow;
+        MagneticField.text = "磁場：" + particleController.H_pow;
+
+        WallSpeed.text = "右壁の速度：" + RightWall.velocity.x;
+
+        Step.text = "ステップ：" + SimulationController.Step;
+
+        RepeatNumber.text = "繰り返し回数：" + wallController.repeatCounter;
     }
 }

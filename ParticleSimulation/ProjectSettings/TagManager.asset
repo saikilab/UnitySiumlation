@@ -10,6 +10,7 @@ TagManager:
   - M
   - Square
   - Sphere
+  - wallX1
   layers:
   - Default
   - TransparentFX
