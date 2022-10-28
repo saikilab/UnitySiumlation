@@ -56,17 +56,19 @@
     <Analyzer Include="/Applications/Visual Studio.app/Contents/Resources/lib/monodevelop/AddIns/MonoDevelop.Unity/Analyzers/Microsoft.Unity.Analyzers.dll" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Assets/Scripts/Unuse/SimulationController.cs" />
+    <Compile Include="Assets/Scripts/Unuse/SimulationController0.cs" />
     <Compile Include="Assets/Scripts/ChangeParticleColor.cs" />
     <Compile Include="Assets/Scripts/SphereWall.cs" />
+    <Compile Include="Assets/Scripts/WallReceivePow.cs" />
     <Compile Include="Assets/Scripts/Unuse/MagneticForceController2.cs" />
     <Compile Include="Assets/Scripts/SaveController.cs" />
     <Compile Include="Assets/Scripts/Unuse/ParticleController2.cs" />
     <Compile Include="Assets/Scripts/WallController.cs" />
-    <Compile Include="Assets/Scripts/Unuse/ParticleController.cs" />
-    <Compile Include="Assets/Scripts/MagnetDipole.cs" />
+    <Compile Include="Assets/Scripts/Unuse/ParticleController0.cs" />
+    <Compile Include="Assets/Scripts/ParticleController.cs" />
     <Compile Include="Assets/Scripts/Unuse/ChangeCamera.cs" />
     <Compile Include="Assets/Scripts/SetParticle.cs" />
+    <Compile Include="Assets/Scripts/SimulationController.cs" />
     <Compile Include="Assets/Scripts/Unuse/MagneticField.cs" />
     <Compile Include="Assets/Scripts/GetInfo.cs" />
     <Compile Include="Assets/Scripts/Unuse/MagneticForceController.cs" />

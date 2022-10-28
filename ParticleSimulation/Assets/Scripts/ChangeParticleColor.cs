@@ -4,14 +4,21 @@ using UnityEngine;
 
 public class ChangeParticleColor : MonoBehaviour
 {
+    private Renderer R;
+
+    private void Start()
+    {
+        R = this.GetComponent<Renderer>();
+    }
+
     void Update()
     {
         if(this.transform.position.z < 0)
         {
-            this.GetComponent<Renderer>().material.color = Color.cyan;
+            R.material.color = Color.cyan;
         } else
         {
-            this.GetComponent<Renderer>().material.color = Color.blue;
+            R.material.color = Color.blue;
         }
     }
 }

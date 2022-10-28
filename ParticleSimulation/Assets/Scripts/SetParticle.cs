@@ -9,6 +9,7 @@ public class SetParticle : MonoBehaviour
     public GameObject Wall;
     public float diameter;
     private int i, j, k, n, maxParticle;
+    private float XBorder, YBorder;
     public GameObject MagneticParticlePrefab;
     public GameObject[] MagneticParticle;
 
@@ -24,19 +25,22 @@ public class SetParticle : MonoBehaviour
     {
         if(Wall.tag == "Square")
         {
-            GameObject X_Wall_1 = Wall.transform.Find("X_Wall1").gameObject;
-            GameObject X_Wall_2 = Wall.transform.Find("X_Wall2").gameObject;
-            GameObject Y_Wall_1 = Wall.transform.Find("Y_Wall1").gameObject;
-            GameObject Y_Wall_2 = Wall.transform.Find("Y_Wall2").gameObject;
+            GameObject X_Wall1 = Wall.transform.Find("X_Wall1").gameObject;
+            GameObject X_Wall2 = Wall.transform.Find("X_Wall2").gameObject;
+            GameObject Y_Wall1 = Wall.transform.Find("Y_Wall1").gameObject;
+            GameObject Y_Wall2 = Wall.transform.Find("Y_Wall2").gameObject;
             float width, height;
-            width = Mathf.Abs(X_Wall_1.transform.position.x - X_Wall_2.transform.position.x);
-            height = Mathf.Abs(Y_Wall_1.transform.position.y - Y_Wall_2.transform.position.y);
-
-            maxParticle = (int)((height / diameter) * (width / diameter));
+            XBorder = X_Wall1.transform.position.x - X_Wall1.transform.localScale.x / 2;
+            YBorder = Y_Wall1.transform.position.y - Y_Wall1.transform.localScale.y / 2;
+            //width = Mathf.Abs(X_Wall1.transform.position.x - X_Wall1.transform.localScale.x / 2 - X_Wall2.transform.position.x + X_Wall2.transform.localScale.x);
+            //height = Mathf.Abs(Y_Wall1.transform.position.y - Y_Wall1.transform.localScale.y / 2 - Y_Wall2.transform.position.y + Y_Wall2.transform.localScale.y);
+            width = XBorder * 2;
+            height = YBorder * 2;
+            maxParticle = (int)(height / diameter) * (int)(width / diameter);
             if (maxParticle < N)
             {
                 N = maxParticle;
-                Debug.Log("粒子数が上限を超えているので自動的にで変更しました");
+                Debug.Log("粒子数が上限を超えているので粒子数を" + N + "へ自動的に変更しました");
             }
             MagneticParticle = new GameObject[N];
 
@@ -49,7 +53,7 @@ public class SetParticle : MonoBehaviour
                     {
                         MagneticParticle[n] = Instantiate(MagneticParticlePrefab);
                         MagneticParticle[n].transform.SetParent(this.transform);
-                        MagneticParticle[n].transform.position = new Vector3(X_Wall_2.transform.position.x + (float)i * diameter + diameter / 2, Y_Wall_2.transform.position.y + (float)j * diameter + diameter / 2, 0);
+                        MagneticParticle[n].transform.position = new Vector3(-XBorder + (float)i * diameter + diameter / 2, -YBorder + (float)j * diameter + diameter / 2, 0);
                         n++;
                     }
                 }
