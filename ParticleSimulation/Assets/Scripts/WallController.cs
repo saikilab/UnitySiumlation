@@ -6,8 +6,12 @@ using System.IO;
 
 public class WallController : MonoBehaviour
 {
+    //no dimention value
+    private const float KgCoefficient = 0.00000000000001f;
+    private const float MCoefficient = 0.000001f;
+
     //simulation value
-    private float DPX1, DPX2, DPY1, DPY2; //defaultPosition
+    private float DPX1, DPX2, DPY1, DPY2, dt; //defaultPosition
     private Rigidbody X1, X2, Y1, Y2;
     public GameObject X_Wall1, X_Wall2, Y_Wall1, Y_Wall2, Z_Wall1, Z_Wall2;
     public int step;
@@ -45,6 +49,8 @@ public class WallController : MonoBehaviour
 
     void FixedUpdate()
     {
+        dt = Time.deltaTime;
+
         step = SimulationController.Step;
 
         StopOverWall();
@@ -150,7 +156,7 @@ public class WallController : MonoBehaviour
 
     public void SaveFp()
     {
-        string[] s1 = {step.ToString(), RecPow.x.ToString()};
+        string[] s1 = {(step*dt).ToString("F4"), (-RecPow.x/dt).ToString()};
         string s2 = string.Join(",", s1);
         Fp[step] = s2;
     }
