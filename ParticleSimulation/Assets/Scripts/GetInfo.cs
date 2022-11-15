@@ -30,6 +30,11 @@ public class GetInfo : MonoBehaviour
                 size = wallController.thickness;
                 WallInfo.text = "形状：正方形\n厚さ：" + size;
             }
+            if (Wall.tag == "Film")
+            {
+                size = wallController.thickness;
+                WallInfo.text = "形状：膜\n厚さ：" + size;
+            }
             if (Wall.tag == "Sphere")
             {
                 size = Wall.transform.localScale.x;

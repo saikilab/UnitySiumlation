@@ -14,6 +14,8 @@ public class WallController : MonoBehaviour
     private float DPX1, DPX2, DPY1, DPY2, dt; //defaultPosition
     private Rigidbody X1, X2, Y1, Y2;
     public GameObject X_Wall1, X_Wall2, Y_Wall1, Y_Wall2, Z_Wall1, Z_Wall2;
+    public GameObject PressM;
+    private Rigidbody PM;
     public int step;
     public int ChangeStep;
     public int repeatNumber;
@@ -22,7 +24,7 @@ public class WallController : MonoBehaviour
     public float MoveSpeed;
     private Vector3 RecPow;
     public Vector3 MovePower, V0;
-    public bool useTimeWall, usePistonWall, useRepeatWall, useEFM; //壁の挙動 切り替え
+    public bool useTimeWall, usePistonWall, useRepeatWall, useEFM, usePressMachine; //壁の挙動 切り替え
 
     //Save
     //public bool useSaveWall; //壁の保存　切り替え
@@ -37,10 +39,17 @@ public class WallController : MonoBehaviour
         DPY2 = Y_Wall2.transform.position.y;
         Z_Wall1.transform.localPosition = new Vector3(0, 0, (thickness+Z_Wall1.transform.localScale.z) / 2f);
         Z_Wall2.transform.localPosition = new Vector3(0, 0, -(thickness+Z_Wall2.transform.localScale.z) / 2f);
-        X1 = X_Wall1.GetComponent<Rigidbody>();
-        X2 = X_Wall2.GetComponent<Rigidbody>();
-        Y1 = Y_Wall1.GetComponent<Rigidbody>();
-        Y2 = Y_Wall2.GetComponent<Rigidbody>();
+        if(this.tag != "Film")
+        {
+            X1 = X_Wall1.GetComponent<Rigidbody>();
+            X2 = X_Wall2.GetComponent<Rigidbody>();
+            Y1 = Y_Wall1.GetComponent<Rigidbody>();
+            Y2 = Y_Wall2.GetComponent<Rigidbody>();
+        } else {
+            PM = PressM.GetComponent<Rigidbody>();
+            X_Wall1 = PressM;
+            DPX1 = PM.transform.position.x;
+        }
         step = 0;
 
         WallPosition = new string[SimulationController.MaxStep]; //最大ステップを10000と仮置き
@@ -53,61 +62,76 @@ public class WallController : MonoBehaviour
 
         step = SimulationController.Step;
 
-        StopOverWall();
+        if (this.tag != "Film")
+        {
+            StopOverWall();
 
-        //左右で位置制御
-        if (Input.GetKey(KeyCode.RightArrow))
-        {
-            MoveWallPos(MoveSpeed);
-        }
-        if (Input.GetKey(KeyCode.LeftArrow))
-        {
-            MoveWallPos(-MoveSpeed);
-        }
+            //左右で位置制御
+            if (Input.GetKey(KeyCode.RightArrow))
+            {
+                MoveWallPos(MoveSpeed);
+            }
+            if (Input.GetKey(KeyCode.LeftArrow))
+            {
+                MoveWallPos(-MoveSpeed);
+            }
 
-        //上下で力制御
-        if (Input.GetKey(KeyCode.UpArrow))
-        {
-            AdmitMoveWall();
-            MoveWallF(MovePower);
-        }
-        else if (Input.GetKey(KeyCode.DownArrow))
-        {
-            MoveWallF(-MovePower);
-        }
+            //上下で力制御
+            if (Input.GetKey(KeyCode.UpArrow))
+            {
+                AdmitMoveWall();
+                MoveWallF(MovePower);
+            }
+            else if (Input.GetKey(KeyCode.DownArrow))
+            {
+                MoveWallF(-MovePower);
+            }
 
-        //保存処理
-        //右壁が受ける力を取得、初期化
-        RecPow = WallReceivePow.Fp;
-        WallReceivePow.Fp = new Vector3(0, 0, 0);
-        if (useTimeWall)
+            //保存処理
+            //右壁が受ける力を取得、初期化
+            RecPow = WallReceivePow.Fp;
+            WallReceivePow.Fp = new Vector3(0, 0, 0);
+            if (useTimeWall)
+            {
+                //if (useSaveWall)
+                SaveWall();
+                SaveFp();
+                TimeWall();
+            }
+            else if (usePistonWall)
+            {
+                //if (useSaveWall)
+                SaveWall();
+                SaveFp();
+                PistonWall();
+            }
+            else if (useRepeatWall)
+            {
+                //if (useSaveWall)
+                SaveWall();
+                SaveFp();
+                RepeatPosWall();
+            }
+            else if (useEFM)
+            {
+                //if (useSaveWall)
+                SaveWall();
+                SaveFp();
+                ElasticForceMeasure();
+            }
+        } else
         {
-            //if (useSaveWall)
-            SaveWall();
-            SaveFp();
-            TimeWall();
-        }
-        else if (usePistonWall)
-        {
-            //if (useSaveWall)
-            SaveWall();
-            SaveFp();
-            PistonWall();
-        }
-        else if (useRepeatWall)
-        {
-            //if (useSaveWall)
-            SaveWall();
-            SaveFp();
-            RepeatPosWall();
-        }
-        else if (useEFM)
-        {
-            //if (useSaveWall)
-            SaveWall();
-            SaveFp();
-            SaveFp();
-            ElasticForceMeasure();
+            RecPow = WallReceivePow.Fp;
+            WallReceivePow.Fp = new Vector3(0, 0, 0);
+            if (usePressMachine)
+            {
+                SaveWall();
+                SaveFp();
+                Press();
+            } else
+            {
+                PM.isKinematic = true;
+            }
         }
     }
 
@@ -261,6 +285,27 @@ public class WallController : MonoBehaviour
             useRepeatWall = false;
             //useSaveWall = false;
             SetDP();
+        }
+    }
+
+    public void Press()
+    {
+        PM.isKinematic = false;
+        if (step < ChangeStep) //圧縮
+        {
+            PM.AddForce(-MovePower);
+        }
+        else //放置
+        {
+            //右壁が初期位置を超えたら停止
+            if (DPX1 < X_Wall1.transform.position.x)
+            {
+                Debug.Log("シミュレーションを終了します");
+                SimulationController.endSimulation = true;
+                usePressMachine = false;
+                //useSaveWall = false;
+                SetDP();
+            }
         }
     }
 

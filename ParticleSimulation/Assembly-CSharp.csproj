@@ -61,6 +61,7 @@
     <Compile Include="Assets/Scripts/SphereWall.cs" />
     <Compile Include="Assets/Scripts/WallReceivePow.cs" />
     <Compile Include="Assets/Scripts/Unuse/MagneticForceController2.cs" />
+    <Compile Include="Assets/Scripts/FilmPresser.cs" />
     <Compile Include="Assets/Scripts/SaveController.cs" />
     <Compile Include="Assets/Scripts/Unuse/ParticleController2.cs" />
     <Compile Include="Assets/Scripts/WallController.cs" />

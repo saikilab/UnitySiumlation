@@ -1,14 +1,15 @@
 ﻿<Properties StartupConfiguration="{3EF46B08-A5A1-5455-5F7D-E48F1A9E72EC}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ParticleController.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WallController.cs">
     <Files>
       <File FileName="Assets/Scripts/WallReceivePow.cs" Line="12" Column="1" />
-      <File FileName="Assets/Scripts/SaveController.cs" />
+      <File FileName="Assets/Scripts/SaveController.cs" Line="48" Column="43" />
       <File FileName="Assets/Scripts/Unuse/ChangeCamera.cs" />
-      <File FileName="Assets/Scripts/SimulationController.cs" />
+      <File FileName="Assets/Scripts/SimulationController.cs" Line="24" Column="6" />
       <File FileName="Assets/Scripts/ParticleController.cs" Line="35" Column="28" />
-      <File FileName="Assets/Scripts/WallController.cs" />
-      <File FileName="Assets/Scripts/GetInfo.cs" />
-      <File FileName="Assets/Scripts/SetParticle.cs" />
+      <File FileName="Assets/Scripts/WallController.cs" Line="133" Column="39" />
+      <File FileName="Assets/Scripts/GetInfo.cs" Line="49" Column="1" />
+      <File FileName="Assets/Scripts/SetParticle.cs" Line="26" Column="54" />
+      <File FileName="Assets/Scripts/FilmPresser.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -17,7 +18,7 @@
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
                 <Node name="Unuse" expanded="True" />
-                <Node name="WallReceivePow.cs" selected="True" />
+                <Node name="WallController.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -27,7 +28,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1ba0f5e5-f636-4797-9b35-91d252072020" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1a895d3b-da4b-4326-96d5-688d56eff60c" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

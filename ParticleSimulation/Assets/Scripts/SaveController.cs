@@ -30,6 +30,7 @@ public class SaveController : MonoBehaviour
 
     public void StandardSave()
     {
+        SimulationController.startSimulation = true;
         SavePanel.SetActive(false);
         dirN = DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString();
         Directory.CreateDirectory(dirN);
@@ -64,6 +65,12 @@ public class SaveController : MonoBehaviour
         StandardSave();
         wallController.useEFM = true;
         WallReceivePow.Fp = new Vector3(0,0,0);
+    }
+
+    public void ClickedFilmPress()
+    {
+        StandardSave();
+        wallController.usePressMachine = true;
     }
 
     public void OutPutSaveData()
