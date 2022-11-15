@@ -5,7 +5,7 @@ using UnityEngine;
 public class SimulationController : MonoBehaviour
 {
     public static int Step;
-    public static int MaxStep = 10000;
+    public static int MaxStep = 100000;
     public static bool startSimulation, endSimulation;
 
     void Start()
@@ -21,10 +21,5 @@ public class SimulationController : MonoBehaviour
         {
             Step++;
         }
-    }
-
-    public void ClickedStartSimulation()
-    {
-        startSimulation = true;
     }
 }

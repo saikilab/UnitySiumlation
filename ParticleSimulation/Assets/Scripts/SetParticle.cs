@@ -23,7 +23,7 @@ public class SetParticle : MonoBehaviour
 
     private void SetParticleN(int N)
     {
-        if(Wall.tag == "Square")
+        if(Wall.tag == "Square" || Wall.tag == "Film")
         {
             GameObject X_Wall1 = Wall.transform.Find("X_Wall1").gameObject;
             GameObject X_Wall2 = Wall.transform.Find("X_Wall2").gameObject;

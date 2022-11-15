@@ -11,6 +11,7 @@ TagManager:
   - Square
   - Sphere
   - wallX1
+  - Film
   layers:
   - Default
   - TransparentFX
