@@ -180,7 +180,7 @@ public class WallController : MonoBehaviour
 
     public void SaveFp()
     {
-        string[] s1 = {(step*dt).ToString("F4"), (-RecPow.x/dt).ToString()};
+        string[] s1 = {(step*dt).ToString("F4"), ((-RecPow.x/dt)*(KgCoefficient/MCoefficient)).ToString()};
         string s2 = string.Join(",", s1);
         Fp[step] = s2;
     }

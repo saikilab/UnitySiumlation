@@ -42,8 +42,8 @@ public class ParticleController : MonoBehaviour
     //mag value
     private const float u0 = 0.000001f; //真空の透磁率 約1.26 10^-6 N/A^2
     private float q; //磁荷　kai * H_pow  SI→Wb CGS→emu
-    private float shita_x; //回転方向の角
-    private float shita_y; //回転軸に対する鎖の角度
+    private float shita_x; //回転方向(x軸基準)に対する鎖の角度
+    private float shita_y; //回転軸(z軸)に対する鎖の角度
     private float dist;
     private Vector3 PosVect; //粒子間の差分ベクトル
     private Vector3 E; //単位ベクトル
@@ -98,7 +98,7 @@ public class ParticleController : MonoBehaviour
         }
 
         //回転用 角度設定（30度）
-        shita_y = 30 * Pi / 180;
+        //shita_y = 30 * Pi / 180;
 
         //磁場の初期条件
         if (onStartMag)
@@ -137,6 +137,26 @@ public class ParticleController : MonoBehaviour
         stepTime = Time.deltaTime; //1ステップの時間
         Noise(); //ブラウン運動
         Interactive(); //磁気相互作用
+
+        //磁場方向切り替え
+        if (Input.GetKeyDown(KeyCode.X))
+        {
+            shita_x = 0f;
+            shita_y = 90f;
+            ChangeMagneticField();
+        }
+        if (Input.GetKeyDown(KeyCode.Y))
+        {
+            shita_x = 90f;
+            shita_y = 90f;
+            ChangeMagneticField();
+        }
+        if (Input.GetKeyDown(KeyCode.Z))
+        {
+            shita_x = 0f;
+            shita_y = 0f;
+            ChangeMagneticField();
+        }
     }
 
     private void Noise() //ブラウン運動
@@ -187,7 +207,6 @@ public class ParticleController : MonoBehaviour
 
     public void Interactive() //磁気相互作用
     {
-        //CalcTimes = 0;
         for (i = 0; i < particleNumber; i++) //Hを初期化
         {
             H[i] = new Vector3(0f, 0f, 0f);
@@ -209,21 +228,25 @@ public class ParticleController : MonoBehaviour
 
                     H[i] += dH[i];
                     H[j] -= dH[i];
-                    //CalcTimes++;
-                    //CalcTimes++;
                 }
             }
             MagneticParticleRB[i].AddForce(H[i] / KgCoefficient);
         }
-        //Debug.Log(CalcTimes / particleNumber);
     }
 
     public void ChangeMagneticField()
     {
-        //q = (4/3) * Pi * Mathf.Pow((diameter/2), 3) * kai * H_pow / u0;
         q = kai * H_pow;
-        M1 = new Vector3(0f, 0f, q * diameter / u0);
-        M2 = new Vector3(0f, 0f, q * diameter / u0);
+
+        shita_y = Mathf.Deg2Rad * shita_y;
+        shita_x = Mathf.Deg2Rad * shita_x;
+
+        x = (q * diameter / u0) * Mathf.Sin(shita_y) * Mathf.Cos(shita_x);
+        y = (q * diameter / u0) *                      Mathf.Sin(shita_x);
+        z = (q * diameter / u0) * Mathf.Cos(shita_y);
+
+        M1 = new Vector3(x, y, z);
+        M2 = M1;
     }
 
     public void ONMag()
