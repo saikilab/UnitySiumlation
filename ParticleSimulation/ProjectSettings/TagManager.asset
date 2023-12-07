@@ -12,6 +12,9 @@ TagManager:
   - Sphere
   - wallX1
   - Film
+  - Elast
+  - Circle
+  - Particle
   layers:
   - Default
   - TransparentFX

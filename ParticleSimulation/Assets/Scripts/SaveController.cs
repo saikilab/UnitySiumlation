@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class SaveController : MonoBehaviour
 {
     public WallController wallController;
-    public ParticleController particleController;
+    public NewParticleController particleController;
     public string dirN;
     public GameObject SavePanel;
     int i, j;

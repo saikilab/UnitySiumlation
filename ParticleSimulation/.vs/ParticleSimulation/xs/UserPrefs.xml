@@ -1,36 +1,36 @@
 ﻿<Properties StartupConfiguration="{3EF46B08-A5A1-5455-5F7D-E48F1A9E72EC}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/WallController.cs">
-    <Files>
-      <File FileName="Assets/Scripts/WallReceivePow.cs" Line="12" Column="1" />
-      <File FileName="Assets/Scripts/SaveController.cs" Line="48" Column="43" />
-      <File FileName="Assets/Scripts/Unuse/ChangeCamera.cs" />
-      <File FileName="Assets/Scripts/SimulationController.cs" Line="24" Column="6" />
-      <File FileName="Assets/Scripts/ParticleController.cs" Line="35" Column="28" />
-      <File FileName="Assets/Scripts/WallController.cs" Line="133" Column="39" />
-      <File FileName="Assets/Scripts/GetInfo.cs" Line="49" Column="1" />
-      <File FileName="Assets/Scripts/SetParticle.cs" Line="26" Column="54" />
-      <File FileName="Assets/Scripts/FilmPresser.cs" />
-    </Files>
-    <Pads>
-      <Pad Id="ProjectPad">
-        <State name="__root__">
-          <Node name="ParticleSimulation" expanded="True">
-            <Node name="Assets" expanded="True">
-              <Node name="Scripts" expanded="True">
-                <Node name="Unuse" expanded="True" />
-                <Node name="WallController.cs" selected="True" />
-              </Node>
-            </Node>
-          </Node>
-        </State>
-      </Pad>
-    </Pads>
-  </MonoDevelop.Ide.Workbench>
-  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
-  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="1a895d3b-da4b-4326-96d5-688d56eff60c" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ChangeParticleColor.cs">
+    <Files>
+      <File FileName="Assets/Scripts/SaveController.cs" />
+      <File FileName="Assets/Scripts/WallController.cs" />
+      <File FileName="Assets/Scripts/WallReceivePow.cs" />
+      <File FileName="Assets/Scripts/Unuse/ChangeCamera.cs" />
+      <File FileName="Assets/Scripts/SimulationController.cs" />
+      <File FileName="Assets/Scripts/GetInfo.cs" />
+      <File FileName="Assets/Scripts/SetParticle.cs" />
+      <File FileName="Assets/Scripts/FilmPresser.cs" />
+      <File FileName="Assets/Scripts/SpeedTest.cs" />
+      <File FileName="Assets/Scripts/HighPos.cs" />
+      <File FileName="Assets/Scripts/MoveRight.cs" />
+      <File FileName="Assets/Scripts/WallReceivePow2.cs" />
+      <File FileName="Assets/Scripts/MeshManager.cs" />
+      <File FileName="Assets/Scripts/FillGap.cs" />
+      <File FileName="Assets/Scripts/ChangeParticleColor.cs" Line="16" Column="44" />
+      <File FileName="Assets/Scripts/CalcRadius.cs" />
+      <File FileName="Assets/Scripts/NewScripts/NewParticleController.cs" />
+      <File FileName="Assets/Scripts/Unuse/Move.cs" />
+      <File FileName="Assets/Scripts/SphereWall.cs" />
+      <File FileName="Assets/Scripts/PassingManager.cs" />
+      <File FileName="Assets/Scripts/ParticleController.cs" />
+      <File FileName="Assets/Scripts/GenerateMagneticField.cs" Line="121" Column="40" />
+      <File FileName="Assets/Scripts/NewScripts/SetHeight.cs" />
+    </Files>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="2430acca-d82c-4eff-8146-3b925214c279" />
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
 </Properties>

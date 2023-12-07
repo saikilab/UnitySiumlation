@@ -52,10 +52,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6662465302844310518}
-    - target: {fileID: 1800577580450210457, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6881685729686678056, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_Name
       value: WallDot3 (8)
@@ -102,10 +98,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7002742658904758660, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -175,10 +167,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
 --- !u!4 &5559171777169741361 stripped
@@ -202,10 +190,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6662465303127368319}
-    - target: {fileID: 1800577580450210457, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6881685729686678056, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_Name
       value: WallDot3 (7)
@@ -254,10 +238,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
 --- !u!4 &5559171776917817738 stripped
@@ -281,10 +261,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6662465301646728411}
-    - target: {fileID: 1800577580450210457, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6881685729686678056, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_Name
       value: WallDot3 (2)
@@ -333,10 +309,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
 --- !u!4 &5559171777569299035 stripped
@@ -360,10 +332,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6662465303250194332}
-    - target: {fileID: 1800577580450210457, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6881685729686678056, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_Name
       value: WallDot3 (1)
@@ -412,10 +380,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
 --- !u!4 &5559171778277265665 stripped
@@ -439,10 +403,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6662465302433900846}
-    - target: {fileID: 1800577580450210457, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6881685729686678056, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_Name
       value: WallDot3 (3)
@@ -491,10 +451,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
 --- !u!4 &5559171778098891036 stripped
@@ -518,10 +474,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6662465302005351622}
-    - target: {fileID: 1800577580450210457, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6881685729686678056, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_Name
       value: WallDot3
@@ -570,10 +522,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
 --- !u!4 &5559171778094307903 stripped
@@ -592,10 +540,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6662465302283265383}
-    - target: {fileID: 1800577580450210457, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6881685729686678056, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_Name
       value: WallDot3 (4)
@@ -644,10 +588,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
 --- !u!4 &5559171778653388009 stripped
@@ -671,10 +611,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6662465302298062826}
-    - target: {fileID: 1800577580450210457, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6881685729686678056, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_Name
       value: WallDot3 (5)
@@ -723,10 +659,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
-      value: 0
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
 --- !u!4 &5559171778536239264 stripped
@@ -750,10 +682,6 @@ PrefabInstance:
       propertyPath: m_ConnectedBody
       value: 
       objectReference: {fileID: 6662465302827277389}
-    - target: {fileID: 1800577580450210457, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_ConnectedAnchor.y
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 6881685729686678056, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_Name
       value: WallDot3 (6)
@@ -800,10 +728,6 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7002742658904758660, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 8105719546776439875, guid: df717673ab9eb42d8b608407672b29bf, type: 3}
-      propertyPath: m_UseGravity
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
