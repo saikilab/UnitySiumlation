@@ -22,4 +22,17 @@ public class SimulationController : MonoBehaviour
             Step++;
         }
     }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            startSimulation = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            startSimulation = true;
+        }
+    }
 }

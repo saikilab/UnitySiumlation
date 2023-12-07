@@ -14,8 +14,8 @@ GameObject:
   - component: {fileID: 7035874746073501548}
   - component: {fileID: 8105719546776439875}
   - component: {fileID: 1800577580450210457}
-  - component: {fileID: 1419505049983763868}
-  m_Layer: 0
+  - component: {fileID: -6533060720265257406}
+  m_Layer: 6
   m_Name: WallDot3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -31,7 +31,7 @@ Transform:
   m_GameObject: {fileID: 6881685729686678056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 1, z: 5}
+  m_LocalScale: {x: 0, y: 1, z: 10}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -94,7 +94,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6881685729686678056}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 51e3828505b4c4c3dbfaed194f831be0, type: 2}
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
@@ -152,7 +152,7 @@ HingeJoint:
   m_EnablePreprocessing: 0
   m_MassScale: 1
   m_ConnectedMassScale: 1
---- !u!114 &1419505049983763868
+--- !u!114 &-6533060720265257406
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -164,4 +164,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a779d8b02ecd74e6c8fdd4b3b6873e26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Pow: {x: 10, y: 0, z: 0}
+  Pow: {x: 7.5, y: 0, z: 0}

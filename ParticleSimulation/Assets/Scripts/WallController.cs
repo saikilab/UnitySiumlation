@@ -268,7 +268,7 @@ public class WallController : MonoBehaviour
         }
     }
 
-    public void RepeatPosWall() //指定回数 位置で圧縮、拡大
+    public void RepeatPosWall() //指定回数
     {
         repeatCounter = step / (2 * ChangeStep);
 
@@ -291,20 +291,32 @@ public class WallController : MonoBehaviour
     public void Press()
     {
         PM.isKinematic = false;
+        if (step == 0) //初速
+        {
+            PM.AddForce(V0, ForceMode.VelocityChange);
+        }
+
         if (step < ChangeStep) //圧縮
         {
-            PM.AddForce(-MovePower);
+            Vector3 V1 = V0 - PM.velocity;
+            PM.AddForce(V1, ForceMode.VelocityChange);
+            PM.AddForce(RecPow, ForceMode.Impulse);
+        }
+        else if(step == ChangeStep)
+        {
+            PM.isKinematic = true;
         }
         else //放置
         {
             //右壁が初期位置を超えたら停止
             if (DPX1 < X_Wall1.transform.position.x)
             {
-                Debug.Log("シミュレーションを終了します");
+                Debug.Log("壁が初期位置へ戻ったため停止しました");
                 SimulationController.endSimulation = true;
                 usePressMachine = false;
                 //useSaveWall = false;
                 SetDP();
+                repeatCounter++;
             }
         }
     }

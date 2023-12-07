@@ -6,6 +6,7 @@ public class MoveRight : MonoBehaviour
 {
     public Vector3 Pow;
     Rigidbody rb;
+    bool isMoving;
     void Start()
     {
         rb = this.GetComponent<Rigidbody>();
@@ -13,7 +14,20 @@ public class MoveRight : MonoBehaviour
 
     void FixedUpdate()
     {
-        if(Input.GetKey(KeyCode.Space))
+        if (isMoving)
             rb.AddForce(Pow);
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Backspace))
+        {
+            isMoving = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            isMoving = true;
+        }
     }
 }

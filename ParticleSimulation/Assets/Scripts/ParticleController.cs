@@ -14,7 +14,7 @@ public class ParticleController : MonoBehaviour
 
     //simulation value
     private const float Pi = Mathf.PI;
-    private int n, i, j, CalcTimes;
+    private int n, i, j;
     private float stepTime, x, y, z;
     private Rigidbody[] MagneticParticleRB;
     private Transform[] MagneticParticleTrans;
@@ -100,17 +100,17 @@ public class ParticleController : MonoBehaviour
         //回転用 角度設定（30度）
         //shita_y = 30 * Pi / 180;
 
-        //磁場の初期条件
-        if (onStartMag)
-            ONMag();
-        else
-            OFFMag();
-
         //パラメータ設定
         diameter = diameter * MCoefficient;
         gamma = 6 * Pi * (diameter / 2) * eta;
         D = kb * T / gamma;
         kai = 50 * 1 * KgCoefficient;//単位質量磁化率→磁化率(emu/G)へ（粒子質量1kg*質量係数）
+
+        //磁場の初期条件
+        if (onStartMag)
+            ONMag();
+        else
+            OFFMag();
     }
 
     private void FixedUpdate()
@@ -137,7 +137,10 @@ public class ParticleController : MonoBehaviour
         stepTime = Time.deltaTime; //1ステップの時間
         Noise(); //ブラウン運動
         Interactive(); //磁気相互作用
+    }
 
+    private void Update()
+    {
         //磁場方向切り替え
         if (Input.GetKeyDown(KeyCode.X))
         {

@@ -9,8 +9,8 @@ public class GetInfo : MonoBehaviour
     WallController wallController;
     public GameObject Wall;
     public Rigidbody RightWall;
-    public Text WallInfo, ParticleN, MagneticField, WallSpeed, Step, RepeatNumber;
-    private float size, F;
+    public Text WallInfo, ParticleN, MagneticField, WallSpeed, Step, RepeatNumber, TimeText;
+    private float size, F, dt;
     bool delay;
 
     private void Start()
@@ -18,6 +18,7 @@ public class GetInfo : MonoBehaviour
         particleController = Wall.GetComponent<ParticleController>();
         wallController = Wall.GetComponent<WallController>();
         delay = true;
+        dt = Time.deltaTime;
     }
 
     private void FixedUpdate()

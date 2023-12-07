@@ -13,7 +13,7 @@ public class ChangeParticleColor : MonoBehaviour
 
     void Update()
     {
-        if(this.transform.position.z < 0)
+        if(this.transform.position.z < 0.01)
         {
             R.material.color = Color.cyan;
         } else
