@@ -27,7 +27,7 @@ public class NewParticleController : MonoBehaviour
     [HideInInspector] public int particleNumber;
 
     //noise value
-    public bool useBrown, useRandPow;
+    public bool useTrans, useBrown, useRandPow;
     public float pow;
     private const float eta = 0.001f; //水の粘性係数 8.9*10^-4
     private const float T = 300; //絶対温度 K
@@ -188,7 +188,7 @@ public class NewParticleController : MonoBehaviour
             ChangeMagneticField();
         }
 
-        if (useBrown)
+        if (useBrown || useTrans)
         {
             Noise(); //ブラウン運動
         }
@@ -267,13 +267,20 @@ public class NewParticleController : MonoBehaviour
             brownX[n] = new Vector3(x, y, z);
 
             //位置制御
-            //MagneticParticleTrans[n].transform.Translate(brownX[n]);
+            if (useTrans)
+            {
+                MagneticParticleTrans[n].transform.Translate(brownX[n]);
+            }
+            else
+            {
+                MagneticParticleRB[n].AddForce((brownX[n]) / stepTime, ForceMode.VelocityChange);
+            }
 
             //速度制御
             //pow += x;
             //pow += y;
             //pow += z;
-            MagneticParticleRB[n].AddForce((brownX[n]) / stepTime, ForceMode.VelocityChange);
+            //MagneticParticleRB[n].AddForce((brownX[n]) / stepTime, ForceMode.VelocityChange);
             //MagneticParticleRB[n].AddForce((brownX[n] - brownX_before[n]) / stepTime, ForceMode.VelocityChange);
 
             //brownX_before[n] = brownX[n];

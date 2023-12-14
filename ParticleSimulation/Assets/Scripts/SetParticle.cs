@@ -53,7 +53,7 @@ public class SetParticle : MonoBehaviour
             }
             MagneticParticle = new GameObject[N];
 
-            int sideSize = Mathf.CeilToInt(Mathf.Sqrt(N * diameter * diameter));
+            int sideSize = Mathf.FloorToInt(Mathf.Sqrt(N * diameter * diameter));
             float pseudoBorder = sideSize / 2f;
 
             //n = 0;
