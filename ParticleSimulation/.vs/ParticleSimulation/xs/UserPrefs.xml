@@ -3,7 +3,7 @@
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>
   <MultiItemStartupConfigurations />
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ChangeParticleColor.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/NewScripts/NewParticleController.cs">
     <Files>
       <File FileName="Assets/Scripts/SaveController.cs" />
       <File FileName="Assets/Scripts/WallController.cs" />
@@ -11,23 +11,24 @@
       <File FileName="Assets/Scripts/Unuse/ChangeCamera.cs" />
       <File FileName="Assets/Scripts/SimulationController.cs" />
       <File FileName="Assets/Scripts/GetInfo.cs" />
-      <File FileName="Assets/Scripts/SetParticle.cs" />
+      <File FileName="Assets/Scripts/SetParticle.cs" Line="75" Column="39" />
       <File FileName="Assets/Scripts/FilmPresser.cs" />
       <File FileName="Assets/Scripts/SpeedTest.cs" />
       <File FileName="Assets/Scripts/HighPos.cs" />
       <File FileName="Assets/Scripts/MoveRight.cs" />
-      <File FileName="Assets/Scripts/WallReceivePow2.cs" />
+      <File FileName="Assets/Scripts/WallReceivePow2.cs" Line="1" Column="1" />
       <File FileName="Assets/Scripts/MeshManager.cs" />
       <File FileName="Assets/Scripts/FillGap.cs" />
-      <File FileName="Assets/Scripts/ChangeParticleColor.cs" Line="16" Column="44" />
+      <File FileName="Assets/Scripts/ChangeParticleColor.cs" />
       <File FileName="Assets/Scripts/CalcRadius.cs" />
-      <File FileName="Assets/Scripts/NewScripts/NewParticleController.cs" />
+      <File FileName="Assets/Scripts/NewScripts/NewParticleController.cs" Line="107" Column="1" />
       <File FileName="Assets/Scripts/Unuse/Move.cs" />
       <File FileName="Assets/Scripts/SphereWall.cs" />
       <File FileName="Assets/Scripts/PassingManager.cs" />
       <File FileName="Assets/Scripts/ParticleController.cs" />
-      <File FileName="Assets/Scripts/GenerateMagneticField.cs" Line="121" Column="40" />
+      <File FileName="Assets/Scripts/GenerateMagneticField.cs" />
       <File FileName="Assets/Scripts/NewScripts/SetHeight.cs" />
+      <File FileName="Assets/Scripts/PressController.cs" />
     </Files>
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />

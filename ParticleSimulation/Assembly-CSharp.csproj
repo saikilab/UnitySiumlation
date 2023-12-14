@@ -59,6 +59,7 @@
     <Compile Include="Assets/Scripts/Unuse/SimulationController0.cs" />
     <Compile Include="Assets/Scripts/ChangeParticleColor.cs" />
     <Compile Include="Assets/Scripts/HighPos.cs" />
+    <Compile Include="Assets/Scripts/Impulse.cs" />
     <Compile Include="Assets/Scripts/SphereWall.cs" />
     <Compile Include="Assets/Scripts/MeshManager.cs" />
     <Compile Include="Assets/Scripts/WallReceivePow.cs" />
@@ -71,6 +72,7 @@
     <Compile Include="Assets/Scripts/NewScripts/SetHeight.cs" />
     <Compile Include="Assets/Scripts/SaveController.cs" />
     <Compile Include="Assets/Scripts/NewScripts/ParticleCollision.cs" />
+    <Compile Include="Assets/Scripts/PressController.cs" />
     <Compile Include="Assets/Scripts/Unuse/ParticleController2.cs" />
     <Compile Include="Assets/Scripts/NewScripts/NewGetInfo.cs" />
     <Compile Include="Assets/Scripts/WallController.cs" />
