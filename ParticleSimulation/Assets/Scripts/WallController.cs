@@ -33,19 +33,21 @@ public class WallController : MonoBehaviour
 
     private void Start()
     {
-        DPX1 = X_Wall1.transform.position.x;
-        DPX2 = X_Wall2.transform.position.x;
-        DPY1 = Y_Wall1.transform.position.y;
-        DPY2 = Y_Wall2.transform.position.y;
-        Z_Wall1.transform.localPosition = new Vector3(0, 0, (thickness+Z_Wall1.transform.localScale.z) / 2f);
-        Z_Wall2.transform.localPosition = new Vector3(0, 0, -(thickness+Z_Wall2.transform.localScale.z) / 2f);
-        if(this.tag != "Film")
+        //DPX1 = X_Wall1.transform.position.x;
+        //DPX2 = X_Wall2.transform.position.x;
+        //DPY1 = Y_Wall1.transform.position.y;
+        //DPY2 = Y_Wall2.transform.position.y;
+        //Z_Wall1.transform.localPosition = new Vector3(0, 0, (thickness+Z_Wall1.transform.localScale.z) / 2f);
+        //Z_Wall2.transform.localPosition = new Vector3(0, 0, -(thickness+Z_Wall2.transform.localScale.z) / 2f);
+        if (this.tag != "Film")
         {
             X1 = X_Wall1.GetComponent<Rigidbody>();
             X2 = X_Wall2.GetComponent<Rigidbody>();
             Y1 = Y_Wall1.GetComponent<Rigidbody>();
             Y2 = Y_Wall2.GetComponent<Rigidbody>();
-        } else {
+        }
+        else
+        {
             PM = PressM.GetComponent<Rigidbody>();
             X_Wall1 = PressM;
             DPX1 = PM.transform.position.x;
@@ -64,7 +66,7 @@ public class WallController : MonoBehaviour
 
         if (this.tag != "Film")
         {
-            StopOverWall();
+            //StopOverWall();
 
             //左右で位置制御
             if (Input.GetKey(KeyCode.RightArrow))
@@ -123,14 +125,26 @@ public class WallController : MonoBehaviour
         {
             RecPow = WallReceivePow.Fp;
             WallReceivePow.Fp = new Vector3(0, 0, 0);
+            PM.isKinematic = true;
             if (usePressMachine)
             {
                 SaveWall();
                 SaveFp();
-                Press();
-            } else
-            {
-                PM.isKinematic = true;
+                if (step < ChangeStep)
+                {
+                    PM.transform.Translate(MoveSpeed, 0, 0);
+                }
+                else
+                {
+                    PM.transform.Translate(-MoveSpeed, 0, 0);
+                }
+                if (step > ChangeStep * 2)
+                {
+                    Debug.Log("壁が初期位置へ戻ったため停止しました");
+                    SimulationController.endSimulation = true;
+                    usePressMachine = false;
+                    SetDP();
+                }
             }
         }
     }
@@ -151,17 +165,17 @@ public class WallController : MonoBehaviour
         Y2.AddForce(movePower, ForceMode.VelocityChange);
     }
 
-    public void StopOverWall() //初期位置を超える場合は壁を停止
-    {
-        if (DPX1 <= X_Wall1.transform.position.x)
-            X1.isKinematic = true;
-        if (DPX2 >= X_Wall2.transform.position.x)
-            X2.isKinematic = true;
-        if (DPY1 <= Y_Wall1.transform.position.y)
-            Y1.isKinematic = true;
-        if (DPY2 >= Y_Wall2.transform.position.y)
-            Y2.isKinematic = true;
-    }
+    //public void StopOverWall() //初期位置を超える場合は壁を停止
+    //{
+    //    if (DPX1 <= X_Wall1.transform.position.x)
+    //        X1.isKinematic = true;
+    //    if (DPX2 >= X_Wall2.transform.position.x)
+    //        X2.isKinematic = true;
+    //    if (DPY1 <= Y_Wall1.transform.position.y)
+    //        Y1.isKinematic = true;
+    //    if (DPY2 >= Y_Wall2.transform.position.y)
+    //        Y2.isKinematic = true;
+    //}
 
     public void AdmitMoveWall() //壁の移動を許可
     {
@@ -204,7 +218,7 @@ public class WallController : MonoBehaviour
         {
             AdmitMoveWall();
             MoveWallF(-MovePower);
-            StopOverWall();
+            //StopOverWall();
 
             //全ての壁が初期位置を超えたら停止
             if (DPX1 <= X_Wall1.transform.position.x && DPX2 >= X_Wall2.transform.position.x && DPY1 <= Y_Wall1.transform.position.y && DPY2 >= Y_Wall2.transform.position.y)

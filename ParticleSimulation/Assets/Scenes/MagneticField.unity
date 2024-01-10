@@ -15522,10 +15522,10 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
+  near clip plane: 0.03
   far clip plane: 1000
   field of view: 60
-  orthographic: 1
+  orthographic: 0
   orthographic size: 50
   m_Depth: 0
   m_CullingMask:
@@ -39949,7 +39949,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9035653459124250113, guid: 2b5fc67d80a53409485ad7608d7a8aa4, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b5fc67d80a53409485ad7608d7a8aa4, type: 3}
@@ -42495,7 +42495,7 @@ MonoBehaviour:
   useRandPow: 0
   pow: 100
   useMagnet: 1
-  default_H_pow: 0.02
+  default_H_pow: 20
   kai: 0
   thDist: 6
   tooNearDist: 0
@@ -86566,7 +86566,7 @@ CapsuleCollider:
   m_GameObject: {fileID: 2110278927}
   m_Material: {fileID: 0}
   m_IsTrigger: 0
-  m_Enabled: 1
+  m_Enabled: 0
   m_Radius: 0.5000001
   m_Height: 2
   m_Direction: 1
@@ -86630,7 +86630,7 @@ Transform:
   m_GameObject: {fileID: 2110278927}
   m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 0.1, z: 1}
+  m_LocalScale: {x: 20, y: 0.1, z: 20}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 2117666818}
@@ -86735,7 +86735,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2117666817}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -5}
+  m_LocalPosition: {x: 0, y: 0, z: 100}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -88105,7 +88105,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6322675169545841350, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6322675169545841368, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
       propertyPath: m_Enabled
