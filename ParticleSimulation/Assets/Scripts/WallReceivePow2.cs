@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class WallReceivePow2: MonoBehaviour
 {
-    private Vector3 Fp;
+    public static Vector3 Fp;
 
     private void OnCollisionStay(Collision collision)
     {

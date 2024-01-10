@@ -89,8 +89,10 @@ public class SaveController : MonoBehaviour
         //WallPosition
         StreamWriter swW = new StreamWriter(dirN + "/Wall_Position.cdv");
         for (i = 0; i <= SimulationController.Step; i++)
+        {
+            //swW.WriteLine(wallController.WallPosition[i]);
             swW.WriteLine(wallController.WallPosition[i]);
-
+        }
         swW.Close();
 
         //Fp

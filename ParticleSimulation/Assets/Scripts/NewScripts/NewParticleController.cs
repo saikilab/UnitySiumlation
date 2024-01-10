@@ -206,26 +206,6 @@ public class NewParticleController : MonoBehaviour
 
     private void Update()
     {
-        ////磁場方向切り替え
-        //if (Input.GetKeyDown(KeyCode.X))
-        //{
-        //    shita_x = 0f;
-        //    shita_y = 90f;
-        //    ChangeMagneticField();
-        //}
-        //if (Input.GetKeyDown(KeyCode.Y))
-        //{
-        //    shita_x = 90f;
-        //    shita_y = 90f;
-        //    ChangeMagneticField();
-        //}
-        //if (Input.GetKeyDown(KeyCode.Z))
-        //{
-        //    shita_x = 0f;
-        //    shita_y = 0f;
-        //    ChangeMagneticField();
-        //}
-
         //磁場方向切り替え
         if (Input.GetKeyDown(KeyCode.X))
         {
@@ -249,6 +229,7 @@ public class NewParticleController : MonoBehaviour
 
     private void Noise() //ブラウン運動
     {
+        float a = 0;
         for (n = 0; n < particleNumber; n++)
         {
             nowPos = MagneticParticleTrans[n].position;
@@ -273,13 +254,11 @@ public class NewParticleController : MonoBehaviour
             }
             else
             {
-                MagneticParticleRB[n].AddForce((brownX[n]) / stepTime, ForceMode.VelocityChange);
+                //MagneticParticleRB[n].AddForce((brownX[n]) / stepTime, ForceMode.VelocityChange);
+                MagneticParticleRB[n].AddForce((brownX[n]) * MCoefficient / KgCoefficient);
             }
 
             //速度制御
-            //pow += x;
-            //pow += y;
-            //pow += z;
             //MagneticParticleRB[n].AddForce((brownX[n]) / stepTime, ForceMode.VelocityChange);
             //MagneticParticleRB[n].AddForce((brownX[n] - brownX_before[n]) / stepTime, ForceMode.VelocityChange);
 
@@ -312,7 +291,7 @@ public class NewParticleController : MonoBehaviour
                 dist = dist * MCoefficient;
                 M_ofParticles[i] = kai * H_pow * (-1f / 4f * Pi * u0) * ((M0/dist*dist*dist)-(3*Vector3.Dot(M0, PosVect)*PosVect/dist * dist * dist * dist * dist));
                 M1 = M_ofParticles[i];
-                H[i] = (3f * u0 / (4f * Pi * dist * dist * dist * dist)) * (Vector3.Dot(M1, E) * M0
+                H[i] = -(3f * u0 / (4f * Pi * dist * dist * dist * dist)) * (Vector3.Dot(M1, E) * M0
                      + Vector3.Dot(M0, E) * M1 + Vector3.Dot(M1, M0) * E
                      - 5f * Vector3.Dot(M1, E) * Vector3.Dot(M0, E) * E);
             }
@@ -327,7 +306,7 @@ public class NewParticleController : MonoBehaviour
                 {
                     M1 = M_ofParticles[i];
                     M2 = M_ofParticles[j];
-                }               
+                }
 
                 PosVect = MagneticParticleTrans[i].position - MagneticParticleTrans[j].position;
                 dist = Mathf.Sqrt(Vector3.Dot(PosVect, PosVect));

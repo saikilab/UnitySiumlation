@@ -483,6 +483,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 252175726}
   m_CullTransparentMesh: 1
+--- !u!1 &366957032 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6322675168163175979, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
+  m_PrefabInstance: {fileID: 1204824336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &391739758
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,7 +520,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 081ffe6d8b83b4dd9a7b0af50633869f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  wallController: {fileID: 0}
+  wallController: {fileID: 935811375}
   particleController: {fileID: 2075357974}
   dirN: 
   SavePanel: {fileID: 1876022272}
@@ -769,6 +774,33 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 396478370}
   m_CullTransparentMesh: 1
+--- !u!1 &495774118 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 7704531381691637496, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
+  m_PrefabInstance: {fileID: 792709368}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &495774125
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 495774118}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 141f595c16e594b288be5e027199a289, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1 &499064335 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6322675169045188646, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
+  m_PrefabInstance: {fileID: 1204824336}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &507112977 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6322675168806729248, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
+  m_PrefabInstance: {fileID: 1204824336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &543857338 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7704531381922064190, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
@@ -840,6 +872,11 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &594131312 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6322675170194613481, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
+  m_PrefabInstance: {fileID: 1204824336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &665811990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1251,6 +1288,10 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 7704531381691637446, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7704531381691637496, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
       propertyPath: m_Name
       value: Wall
@@ -1347,7 +1388,9 @@ PrefabInstance:
       propertyPath: m_LocalPosition.x
       value: 26
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 7704531382007772787, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
+    - {fileID: 7704531381691637446, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
   m_SourcePrefab: {fileID: 100100000, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
 --- !u!1 &793227426
 GameObject:
@@ -1385,107 +1428,7 @@ MonoBehaviour:
   XBorder: 20
   YBorder: 20
   MagneticParticlePrefab: {fileID: 2500388656286711349, guid: 3e12a2cd84d864f55a5b9f635d5bc344, type: 3}
-  MagneticParticle:
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
+  MagneticParticle: []
   circleWall_Radius: 11
 --- !u!4 &793227428
 Transform:
@@ -1908,8 +1851,51 @@ PrefabInstance:
       propertyPath: m_Name
       value: ElastWall
       objectReference: {fileID: 0}
+    - target: {fileID: 9035653459124250113, guid: 2b5fc67d80a53409485ad7608d7a8aa4, type: 3}
+      propertyPath: m_TagString
+      value: Film
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b5fc67d80a53409485ad7608d7a8aa4, type: 3}
+--- !u!1 &935811374 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9035653459124250113, guid: 2b5fc67d80a53409485ad7608d7a8aa4, type: 3}
+  m_PrefabInstance: {fileID: 935811373}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &935811375
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 935811374}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ef6fd22dd29545c0bd9fb57914ab8a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  X_Wall1: {fileID: 594131312}
+  X_Wall2: {fileID: 366957032}
+  Y_Wall1: {fileID: 1895134879}
+  Y_Wall2: {fileID: 507112977}
+  Z_Wall1: {fileID: 1772410445}
+  Z_Wall2: {fileID: 499064335}
+  PressM: {fileID: 873886283}
+  step: 0
+  ChangeStep: 2500
+  repeatNumber: 0
+  repeatCounter: 0
+  thickness: 0
+  MoveSpeed: -0.01
+  MovePower: {x: 0, y: 0, z: 0}
+  V0: {x: 0, y: 0, z: 0}
+  useTimeWall: 0
+  usePistonWall: 0
+  useRepeatWall: 0
+  useEFM: 0
+  usePressMachine: 0
+  WallPosition: []
+  Fp: []
 --- !u!1 &957987603
 GameObject:
   m_ObjectHideFlags: 0
@@ -3939,7 +3925,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 243.75, y: -211.25}
+  m_AnchoredPosition: {x: 195.25, y: -204}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569657637
@@ -4464,6 +4450,11 @@ Transform:
   m_Father: {fileID: 594033984}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &1772410445 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6322675168338954041, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
+  m_PrefabInstance: {fileID: 1204824336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1787251056
 GameObject:
   m_ObjectHideFlags: 0
@@ -5027,6 +5018,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1876022272}
   m_CullTransparentMesh: 1
+--- !u!1 &1895134879 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6322675168187022071, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
+  m_PrefabInstance: {fileID: 1204824336}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1979660030
 GameObject:
   m_ObjectHideFlags: 0
@@ -5397,6 +5393,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2075357975}
   - component: {fileID: 2075357974}
+  - component: {fileID: 2075357976}
   m_Layer: 0
   m_Name: ParticleController
   m_TagString: Untagged
@@ -5562,6 +5559,18 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2075357976
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2075357973}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38077518b882d4fca8cd0b4baaf74e0b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2087343963
 GameObject:
   m_ObjectHideFlags: 0

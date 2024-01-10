@@ -29,7 +29,7 @@ public class Move : MonoBehaviour
         else if (Translate)
             transform.Translate(V * dt);
         else if (VeloChan)
-            rb.AddForce(V, ForceMode.VelocityChange);
+            rb.AddForce(V/dt, ForceMode.VelocityChange);
         else if (Acceleration)
             rb.AddForce(V, ForceMode.Acceleration);
     }
