@@ -13,7 +13,7 @@ public class SetParticle : MonoBehaviour
     private int i, j, k, n, maxParticle;
     public float XBorder, YBorder;
     public GameObject MagneticParticlePrefab;
-    public GameObject[] MagneticParticle;
+    [HideInInspector] public GameObject[] MagneticParticle;
     public float circleWall_Radius;
 
     void Awake()

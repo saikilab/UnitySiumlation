@@ -84,6 +84,7 @@
     <Compile Include="Assets/Scripts/MoveRight.cs" />
     <Compile Include="Assets/Scripts/SimulationController.cs" />
     <Compile Include="Assets/Scripts/PassingManager.cs" />
+    <Compile Include="Assets/Scripts/CalcWallPow.cs" />
     <Compile Include="Assets/Scripts/Unuse/Move.cs" />
     <Compile Include="Assets/Scripts/Unuse/MagneticField.cs" />
     <Compile Include="Assets/Scripts/CalcRadius.cs" />

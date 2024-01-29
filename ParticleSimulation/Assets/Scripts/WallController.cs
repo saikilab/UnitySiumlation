@@ -24,7 +24,9 @@ public class WallController : MonoBehaviour
     public float MoveSpeed;
     private Vector3 RecPow;
     public Vector3 MovePower, V0;
-    public bool useTimeWall, usePistonWall, useRepeatWall, useEFM, usePressMachine; //壁の挙動 切り替え
+    public bool useTimeWall, usePistonWall, useRepeatWall, useEFM, usePressMachine, rotateWall; //壁の挙動 切り替え
+    public bool inverse;
+    public GameObject PressMachines, SmallWall;
 
     //Save
     //public bool useSaveWall; //壁の保存　切り替え
@@ -45,6 +47,7 @@ public class WallController : MonoBehaviour
             X2 = X_Wall2.GetComponent<Rigidbody>();
             Y1 = Y_Wall1.GetComponent<Rigidbody>();
             Y2 = Y_Wall2.GetComponent<Rigidbody>();
+            DPX1 = X1.transform.position.x;
         }
         else
         {
@@ -129,21 +132,37 @@ public class WallController : MonoBehaviour
             if (usePressMachine)
             {
                 SaveWall();
-                SaveFp();
-                if (step < ChangeStep)
+                if (inverse)
                 {
-                    PM.transform.Translate(MoveSpeed, 0, 0);
+                    SaveFpY();
                 }
                 else
                 {
-                    PM.transform.Translate(-MoveSpeed, 0, 0);
+                    SaveFp();
+                }
+                if (step < ChangeStep)
+                {
+                    PM.transform.Translate(V0);
+                }
+                else
+                {
+                    PM.transform.Translate(-V0);
                 }
                 if (step > ChangeStep * 2)
                 {
                     Debug.Log("壁が初期位置へ戻ったため停止しました");
                     SimulationController.endSimulation = true;
                     usePressMachine = false;
-                    SetDP();
+                    //SetDP();
+                    if (rotateWall)
+                    {
+                        SmallWall.transform.Rotate(0, 0, 90);
+                        PressMachines.transform.Rotate(0, 0, 90);
+                        if (inverse)
+                            inverse = false;
+                        else
+                            inverse = true;
+                    }
                 }
             }
         }
@@ -195,6 +214,13 @@ public class WallController : MonoBehaviour
     public void SaveFp()
     {
         string[] s1 = {(step*dt).ToString("F4"), ((-RecPow.x/dt)*(KgCoefficient/MCoefficient)).ToString()};
+        string s2 = string.Join(",", s1);
+        Fp[step] = s2;
+    }
+
+    public void SaveFpY()
+    {
+        string[] s1 = { (step * dt).ToString("F4"), ((-RecPow.y / dt) * (KgCoefficient / MCoefficient)).ToString() };
         string s2 = string.Join(",", s1);
         Fp[step] = s2;
     }
@@ -260,6 +286,8 @@ public class WallController : MonoBehaviour
         if(step == 0) //初速
         {
             X1.AddForce(V0, ForceMode.VelocityChange);
+            Debug.Log(X1);
+            Debug.Log(V0);
         }
 
         if (step < ChangeStep) //圧縮
@@ -277,7 +305,8 @@ public class WallController : MonoBehaviour
                 SimulationController.endSimulation = true;
                 useEFM = false;
                 //useSaveWall = false;
-                SetDP();
+                //SetDP();
+                X1.isKinematic = true;
             }
         }
     }

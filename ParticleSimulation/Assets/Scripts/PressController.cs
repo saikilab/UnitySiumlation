@@ -9,7 +9,7 @@ public class PressController : MonoBehaviour
     public bool usePress;
     public Vector3 V0;
     public float ChangeStep;
-    float step;
+    public float step;
     Vector3 PW_DefaultPosition;
 
     private void Start()
@@ -47,12 +47,26 @@ public class PressController : MonoBehaviour
             //Debug.Log(V1);
             //Debug.Log(WallReceivePow.Fp);
         }
-        else //放置
+        else if (step < ChangeStep * 2) //放置
         {
-            PressWall_rb.isKinematic = false;
+            PressWall.transform.Translate(-V0);
             //右壁が初期位置を超えたら停止
-            if (PW_DefaultPosition.x < PressWall.transform.position.x)
-            {
+            //if (PW_DefaultPosition.x < PressWall.transform.position.x)
+            //{
+            //    Debug.Log("壁が初期位置へ戻ったため停止しました");
+            //    //SimulationController.endSimulation = true;
+            //    usePress = false;
+            //    step = 0;
+            //    PressWall.transform.position = PW_DefaultPosition;
+            //    PressWall_rb.isKinematic = true;
+            //    //useSaveWall = false;
+            //    //SetDP();
+            //}
+        }
+        else
+        {
+            //if (PW_DefaultPosition.x < PressWall.transform.position.x)
+            //{
                 Debug.Log("壁が初期位置へ戻ったため停止しました");
                 //SimulationController.endSimulation = true;
                 usePress = false;
@@ -61,7 +75,7 @@ public class PressController : MonoBehaviour
                 PressWall_rb.isKinematic = true;
                 //useSaveWall = false;
                 //SetDP();
-            }
+            //}
         }
     }
 }

@@ -50,7 +50,7 @@ public class NewGetInfo : MonoBehaviour
 
         //Step.text = "ステップ：" + SimulationController.Step;
 
-        //WallSpeed.text = "右壁の速度：" + RightWall.velocity.x;
+        //WallSpeedText.text = "右壁の速度：" + RightWall.velocity.x;
 
         //RepeatNumber.text = "繰り返し回数：" + wallController.repeatCounter;
     }
