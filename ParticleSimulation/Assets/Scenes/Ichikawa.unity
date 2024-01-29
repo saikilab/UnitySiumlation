@@ -831,7 +831,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newParticleController: {fileID: 2075357974}
-  thickness: 1.786
+  thickness: 1.8
   Z_Wall_front: {fileID: 1771674664}
   Z_Wall_back: {fileID: 1528553623}
 --- !u!4 &594033984
@@ -1404,7 +1404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newParticleController: {fileID: 2075357974}
-  setParticleN: 200
+  setParticleN: 140
   set: 1
   Wall: {fileID: 1330858329}
   XBorder: 20
@@ -5517,7 +5517,7 @@ MonoBehaviour:
   useRandPow: 1
   pow: 100
   useMagnet: 1
-  default_H_pow: 0.03
+  default_H_pow: 0.05
   kai: 0
   thDist: 6
   tooNearDist: 0
