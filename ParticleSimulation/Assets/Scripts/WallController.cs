@@ -41,20 +41,26 @@ public class WallController : MonoBehaviour
         //DPY2 = Y_Wall2.transform.position.y;
         //Z_Wall1.transform.localPosition = new Vector3(0, 0, (thickness+Z_Wall1.transform.localScale.z) / 2f);
         //Z_Wall2.transform.localPosition = new Vector3(0, 0, -(thickness+Z_Wall2.transform.localScale.z) / 2f);
-        if (this.tag != "Film")
-        {
-            X1 = X_Wall1.GetComponent<Rigidbody>();
-            X2 = X_Wall2.GetComponent<Rigidbody>();
-            Y1 = Y_Wall1.GetComponent<Rigidbody>();
-            Y2 = Y_Wall2.GetComponent<Rigidbody>();
-            DPX1 = X1.transform.position.x;
-        }
-        else
-        {
+        //if (this.tag != "Film")
+        //{
+        //    X1 = X_Wall1.GetComponent<Rigidbody>();
+        //    X2 = X_Wall2.GetComponent<Rigidbody>();
+        //    Y1 = Y_Wall1.GetComponent<Rigidbody>();
+        //    Y2 = Y_Wall2.GetComponent<Rigidbody>();
+
+        //    //市川用
+        //    PM = PressM.GetComponent<Rigidbody>();
+        //    X_Wall1 = PressM;
+        //    DPX1 = X1.transform.position.x;
+        //}
+        //else
+        //{
             PM = PressM.GetComponent<Rigidbody>();
             X_Wall1 = PressM;
             DPX1 = PM.transform.position.x;
-        }
+        PM.isKinematic = true;
+        //}
+        X1 = PM;
         step = 0;
 
         WallPosition = new string[SimulationController.MaxStep]; //最大ステップを10000と仮置き
@@ -67,8 +73,8 @@ public class WallController : MonoBehaviour
 
         step = SimulationController.Step;
 
-        if (this.tag != "Film")
-        {
+        //if (this.tag != "Film")
+        //{
             //StopOverWall();
 
             //左右で位置制御
@@ -124,11 +130,10 @@ public class WallController : MonoBehaviour
                 SaveFp();
                 ElasticForceMeasure();
             }
-        } else
-        {
+        //} else
+        //{
             RecPow = WallReceivePow.Fp;
             WallReceivePow.Fp = new Vector3(0, 0, 0);
-            PM.isKinematic = true;
             if (usePressMachine)
             {
                 SaveWall();
@@ -142,11 +147,11 @@ public class WallController : MonoBehaviour
                 }
                 if (step < ChangeStep)
                 {
-                    PM.transform.Translate(V0);
+                    PM.transform.Translate(MoveSpeed, 0, 0);
                 }
                 else
                 {
-                    PM.transform.Translate(-V0);
+                    PM.transform.Translate(-MoveSpeed, 0, 0);
                 }
                 if (step > ChangeStep * 2)
                 {
@@ -165,7 +170,7 @@ public class WallController : MonoBehaviour
                     }
                 }
             }
-        }
+        //}
     }
 
     public void MoveWallPos(float moveSpeed) //位置制御
