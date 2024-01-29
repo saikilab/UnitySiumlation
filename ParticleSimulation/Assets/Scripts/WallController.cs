@@ -291,8 +291,6 @@ public class WallController : MonoBehaviour
         if(step == 0) //初速
         {
             X1.AddForce(V0, ForceMode.VelocityChange);
-            Debug.Log(X1);
-            Debug.Log(V0);
         }
 
         if (step < ChangeStep) //圧縮
@@ -301,7 +299,11 @@ public class WallController : MonoBehaviour
             X1.AddForce(V1, ForceMode.VelocityChange);
             X1.AddForce(RecPow, ForceMode.Impulse);
         }
-        else //放置
+        else if(step == ChangeStep) //放置
+        {
+            X1.isKinematic = true;
+        }
+        else
         {
             //右壁が初期位置を超えたら停止
             if (DPX1 < X_Wall1.transform.position.x)
