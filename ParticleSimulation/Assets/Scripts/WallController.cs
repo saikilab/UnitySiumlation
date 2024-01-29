@@ -132,8 +132,8 @@ public class WallController : MonoBehaviour
             }
         //} else
         //{
-            RecPow = WallReceivePow.Fp;
-            WallReceivePow.Fp = new Vector3(0, 0, 0);
+            //RecPow = WallReceivePow.Fp;
+            //WallReceivePow.Fp = new Vector3(0, 0, 0);
             if (usePressMachine)
             {
                 SaveWall();
