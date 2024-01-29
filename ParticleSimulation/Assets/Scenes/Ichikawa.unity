@@ -275,7 +275,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &43802990
 RectTransform:
   m_ObjectHideFlags: 0
@@ -292,9 +292,9 @@ RectTransform:
   m_Father: {fileID: 1876022273}
   m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: -211.25}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 121.625, y: -199}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &43802991
@@ -801,27 +801,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6322675168806729248, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
   m_PrefabInstance: {fileID: 1204824336}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &543857338 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 7704531381922064190, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
-  m_PrefabInstance: {fileID: 792709368}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &543857340
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 543857338}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9a4cd5c40853a4770baf4f9eaf5ad1bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  PressWall: {fileID: 873886283}
-  usePress: 0
-  V0: {x: -0.01, y: 0, z: 0}
-  ChangeStep: 1000
 --- !u!1 &594033982
 GameObject:
   m_ObjectHideFlags: 0
@@ -872,11 +851,6 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!1 &594131312 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6322675170194613481, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
-  m_PrefabInstance: {fileID: 1204824336}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &665811990
 GameObject:
   m_ObjectHideFlags: 0
@@ -1310,8 +1284,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7704531381691637497, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -26
+      value: -30
       objectReference: {fileID: 0}
+    - target: {fileID: 7704531381691637499, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 33dd25e6f2bb4417e839f06bcd73e279, type: 2}
     - target: {fileID: 7704531381922064190, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
       propertyPath: m_Name
       value: PressMachines
@@ -1386,8 +1364,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7704531382007772789, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 26
+      value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 7704531382007772791, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 33dd25e6f2bb4417e839f06bcd73e279, type: 2}
     m_RemovedComponents:
     - {fileID: 7704531382007772787, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
     - {fileID: 7704531381691637446, guid: ab40f85241b8e4a7b938956998934efe, type: 3}
@@ -1853,7 +1835,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9035653459124250113, guid: 2b5fc67d80a53409485ad7608d7a8aa4, type: 3}
       propertyPath: m_TagString
-      value: Film
+      value: Untagged
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2b5fc67d80a53409485ad7608d7a8aa4, type: 3}
@@ -1874,7 +1856,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ef6fd22dd29545c0bd9fb57914ab8a2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  X_Wall1: {fileID: 594131312}
+  X_Wall1: {fileID: 873886283}
   X_Wall2: {fileID: 366957032}
   Y_Wall1: {fileID: 1895134879}
   Y_Wall2: {fileID: 507112977}
@@ -1882,18 +1864,22 @@ MonoBehaviour:
   Z_Wall2: {fileID: 499064335}
   PressM: {fileID: 873886283}
   step: 0
-  ChangeStep: 2500
+  ChangeStep: 200
   repeatNumber: 0
   repeatCounter: 0
   thickness: 0
-  MoveSpeed: -0.01
+  MoveSpeed: -0.1
   MovePower: {x: 0, y: 0, z: 0}
-  V0: {x: 0, y: 0, z: 0}
+  V0: {x: -15, y: 0, z: 0}
   useTimeWall: 0
   usePistonWall: 0
   useRepeatWall: 0
   useEFM: 0
   usePressMachine: 0
+  rotateWall: 0
+  inverse: 0
+  PressMachines: {fileID: 0}
+  SmallWall: {fileID: 0}
   WallPosition: []
   Fp: []
 --- !u!1 &957987603
@@ -2197,7 +2183,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &1137756553
 RectTransform:
   m_ObjectHideFlags: 0
@@ -2927,6 +2913,10 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6322675169545841368, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
       propertyPath: PressM
+      value: 
+      objectReference: {fileID: 873886283}
+    - target: {fileID: 6322675169545841368, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
+      propertyPath: X_Wall1
       value: 
       objectReference: {fileID: 873886283}
     - target: {fileID: 6322675169545841369, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
@@ -3881,7 +3871,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1545180186}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -50}
+  m_LocalPosition: {x: 0, y: 1, z: -80}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3925,7 +3915,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 195.25, y: -204}
+  m_AnchoredPosition: {x: 374.875, y: -199}
   m_SizeDelta: {x: 150, y: 150}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1569657637
@@ -5527,7 +5517,7 @@ MonoBehaviour:
   useRandPow: 1
   pow: 100
   useMagnet: 1
-  default_H_pow: 0.05
+  default_H_pow: 0.03
   kai: 0
   thDist: 6
   tooNearDist: 0

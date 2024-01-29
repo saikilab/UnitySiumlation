@@ -338,6 +338,7 @@
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/UnityEditor.UI.ref.dll"
 -r:"Library/Bee/artifacts/200b0aEDbg.dag/UnityEngine.UI.ref.dll"
 "Assets/Scripts/CalcRadius.cs"
+"Assets/Scripts/CalcWallPow.cs"
 "Assets/Scripts/ChangeParticleColor.cs"
 "Assets/Scripts/FillGap.cs"
 "Assets/Scripts/FilmPresser.cs"
