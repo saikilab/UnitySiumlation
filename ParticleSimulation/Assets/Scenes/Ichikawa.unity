@@ -1404,7 +1404,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   newParticleController: {fileID: 2075357974}
-  setParticleN: 140
+  setParticleN: 200
   set: 1
   Wall: {fileID: 1330858329}
   XBorder: 20
@@ -1834,6 +1834,10 @@ PrefabInstance:
       value: ElastWall
       objectReference: {fileID: 0}
     - target: {fileID: 9035653459124250113, guid: 2b5fc67d80a53409485ad7608d7a8aa4, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9035653459124250113, guid: 2b5fc67d80a53409485ad7608d7a8aa4, type: 3}
       propertyPath: m_TagString
       value: Untagged
       objectReference: {fileID: 0}
@@ -1870,7 +1874,7 @@ MonoBehaviour:
   thickness: 0
   MoveSpeed: -0.1
   MovePower: {x: 0, y: 0, z: 0}
-  V0: {x: -15, y: 0, z: 0}
+  V0: {x: -30, y: 0, z: 0}
   useTimeWall: 0
   usePistonWall: 0
   useRepeatWall: 0
@@ -2909,7 +2913,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6322675169545841350, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6322675169545841368, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
       propertyPath: PressM
@@ -2978,6 +2982,10 @@ PrefabInstance:
     - target: {fileID: 6322675169590696999, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6322675170194613482, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
+      propertyPath: m_IsKinematic
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 2d37a397134f841579ac581a1d470be3, type: 3}
@@ -5517,7 +5525,7 @@ MonoBehaviour:
   useRandPow: 1
   pow: 100
   useMagnet: 1
-  default_H_pow: 0.05
+  default_H_pow: 1000
   kai: 0
   thDist: 6
   tooNearDist: 0

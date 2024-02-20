@@ -28,9 +28,9 @@ public class ParticleController : MonoBehaviour
     [HideInInspector] public int particleNumber;
 
     //noise value
-    private const float eta = 0.001f; //水の粘性係数 8.9*10^-4
+    private const float eta = 8.9e-4f; //水の粘性係数 8.9*10^-4
     private const float T = 300; //絶対温度 K
-    private const float kb = 0.00000000000000000000001f; //ボルツマン定数 1.38*10^-23
+    private const float kb = 1.38e-23f; //ボルツマン定数 1.38*10^-23
     private float gamma; //粘性抵抗
     private float D; //拡散係数
     private Vector3 V; //速度
@@ -40,7 +40,7 @@ public class ParticleController : MonoBehaviour
     //public float randomForce; //ランダム力（実験から算出）
 
     //mag value
-    private const float u0 = 0.000001f; //真空の透磁率 約1.26 10^-6 N/A^2
+    private const float u0 = 1.26e-6f; //真空の透磁率 約1.26 10^-6 N/A^2
     private float q; //磁荷　kai * H_pow  SI→Wb CGS→emu
     private float shita_x; //回転方向(x軸基準)に対する鎖の角度
     private float shita_y; //回転軸(z軸)に対する鎖の角度
