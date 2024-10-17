@@ -77,26 +77,26 @@ public class WallController : MonoBehaviour
         //{
             //StopOverWall();
 
-            //左右で位置制御
-            if (Input.GetKey(KeyCode.RightArrow))
-            {
-                MoveWallPos(MoveSpeed);
-            }
-            if (Input.GetKey(KeyCode.LeftArrow))
-            {
-                MoveWallPos(-MoveSpeed);
-            }
+            ////左右で位置制御
+            //if (Input.GetKey(KeyCode.RightArrow))
+            //{
+            //    MoveWallPos(MoveSpeed);
+            //}
+            //if (Input.GetKey(KeyCode.LeftArrow))
+            //{
+            //    MoveWallPos(-MoveSpeed);
+            //}
 
-            //上下で力制御
-            if (Input.GetKey(KeyCode.UpArrow))
-            {
-                AdmitMoveWall();
-                MoveWallF(MovePower);
-            }
-            else if (Input.GetKey(KeyCode.DownArrow))
-            {
-                MoveWallF(-MovePower);
-            }
+            ////上下で力制御
+            //if (Input.GetKey(KeyCode.UpArrow))
+            //{
+            //    AdmitMoveWall();
+            //    MoveWallF(MovePower);
+            //}
+            //else if (Input.GetKey(KeyCode.DownArrow))
+            //{
+            //    MoveWallF(-MovePower);
+            //}
 
             //保存処理
             //右壁が受ける力を取得、初期化
@@ -147,11 +147,11 @@ public class WallController : MonoBehaviour
                 }
                 if (step < ChangeStep)
                 {
-                    PM.transform.Translate(MoveSpeed, 0, 0);
+                    PressM.transform.Translate(MoveSpeed, 0, 0);
                 }
                 else
                 {
-                    PM.transform.Translate(-MoveSpeed, 0, 0);
+                    PressM.transform.Translate(-MoveSpeed, 0, 0);
                 }
                 if (step > ChangeStep * 2)
                 {

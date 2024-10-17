@@ -97,8 +97,13 @@ public class SaveController : MonoBehaviour
 
         //Fp
         StreamWriter swFp = new StreamWriter(dirN + "/Fp.csv");
-        for (i = 0; i <= SimulationController.Step; i++)
-            swFp.WriteLine(wallController.Fp[i]);
+        string str;
+        for (i = 0; i < SimulationController.Step / 10; i++)
+        {
+            str = FpX.Fp[i * 10].x.ToString("F7") + ", " + FpY.Fp[i * 10].x.ToString("F7") + ", " + FpZ.Fp[i * 10].y.ToString("F7");
+            swFp.WriteLine(str);
+        }
+            //swFp.WriteLine(wallController.Fp[i]);
         swFp.Close();
 
         Debug.Log("保存が完了しました");

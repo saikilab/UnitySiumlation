@@ -14,6 +14,6 @@ public class SetHeight : MonoBehaviour
     {
         diameter = newParticleController.diameter;
         Z_Wall_front.transform.localPosition = new Vector3(0, 0, -(thickness * diameter + Z_Wall_front.transform.localScale.z) / 2f);
-        Z_Wall_back.transform.localPosition = new Vector3(0, 0, (thickness * diameter + Z_Wall_back.transform.localScale.z) / 2f);
+        Z_Wall_back.transform.localPosition = new Vector3(Z_Wall_back.transform.localPosition.x, Z_Wall_back.transform.localPosition.y, (thickness * diameter + Z_Wall_back.transform.localScale.z) / 2f);
     }
 }

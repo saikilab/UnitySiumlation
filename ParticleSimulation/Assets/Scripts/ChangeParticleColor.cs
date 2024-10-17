@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class ChangeParticleColor : MonoBehaviour
 {
+    public bool x, y, z;
     private Renderer R;
 
     private void Start()
@@ -13,12 +14,37 @@ public class ChangeParticleColor : MonoBehaviour
 
     void Update()
     {
-        if(this.transform.position.z < 0.01)
+        if (x)
         {
-            R.material.color = Color.cyan;
-        } else
+            if (this.transform.position.x > 0.01)
+            {
+                R.material.color = Color.cyan;
+            }
+            else
+            {
+                R.material.color = Color.blue;
+            }
+        }
+        else if (y)
         {
-            R.material.color = Color.blue;
+            if (this.transform.position.y > 0.01)
+            {
+                R.material.color = Color.cyan;
+            }
+            else
+            {
+                R.material.color = Color.blue;
+            }
+        } else if (z)
+        {
+            if (this.transform.position.z > 0.01)
+            {
+                R.material.color = Color.cyan;
+            }
+            else
+            {
+                R.material.color = Color.blue;
+            }
         }
     }
 }

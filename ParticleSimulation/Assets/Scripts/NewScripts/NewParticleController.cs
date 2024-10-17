@@ -16,8 +16,8 @@ public class NewParticleController : MonoBehaviour
     private const float Pi = Mathf.PI;
     private int n, i, j;
     private float stepTime, x, y, z;
-    private Rigidbody[] MagneticParticleRB;
-    private Transform[] MagneticParticleTrans;
+    private Rigidbody[] MagneticParticle_rb;
+    private Transform[] MagneticParticle_trans;
     public Button ON_MagButton, OFF_MagButton, TimeMagButton;
     public SetParticle setParticle;
     public GameObject[] MagneticParticle;
@@ -25,10 +25,13 @@ public class NewParticleController : MonoBehaviour
     public int ChangeStep; //変化Step
     public float diameter;
     [HideInInspector] public int particleNumber;
+    public bool addBeadsByWallPos;
+    public GameObject[] WallObjects;
+    private Vector3[] defaultPos;
 
     //noise value
     public bool useTrans, useBrown, useRandPow;
-    public float pow;
+    public float brownPow, pow;
     private const float eta = 0.001f; //水の粘性係数 8.9*10^-4
     private const float T = 300; //絶対温度 K
     private const float kb = 1.38e-23f; //ボルツマン定数 1.38*10^-23
@@ -37,15 +40,15 @@ public class NewParticleController : MonoBehaviour
     private Vector3 V; //速度
     private Vector3 nowPos; //前の位置との比較用
     private Vector3[] brownX; //ブラウン運動の変位
-    private Vector3[] BeforePosition; //前ステップの位置を保存
-    private Vector3[] brownX_before;
+    //private Vector3[] BeforePosition; //前ステップの位置を保存
+    //private Vector3[] brownX_before;
 
     //mag value
     public bool useMagnet;
     private const float u0 = 1.26e-6f; //真空の透磁率 約1.26 10^-6 N/A^2
     private float q; //磁荷　kai * H_pow  SI→Wb CGS→emu
-    private float shita_x; //回転方向(x軸基準)に対する鎖の角度
-    private float shita_y; //回転軸(z軸)に対する鎖の角度
+    public float shita_x; //回転方向(x軸基準)に対する鎖の角度
+    public float shita_y; //回転軸(z軸)に対する鎖の角度
     private float dist;
     private Vector3 PosVect; //粒子間の差分ベクトル
     private Vector3 E; //単位ベクトル
@@ -61,10 +64,13 @@ public class NewParticleController : MonoBehaviour
     public bool useRotation; //回転磁場 切り替え
     public bool useTimeChangeMag; //時間変化磁場 切り替え
     [HideInInspector] public float H_pow; //外部磁場の強さ(G) 70 A/m =  約1 G
-    public GameObject MagnetOBJ;
+    public GameObject MagneticParticlePrefab, MagnetOBJ;
     public Transform MagnetOBJTrans;
-    public bool useMagnetOBJ;
+    public bool useMagnetOBJ, useLine;
+    public float lineCoefficient;
+    public Material LineMaterial;
     Vector3[] M_ofParticles;
+    LineRenderer[] lineRenderer;
 
     //Save value
     public bool saveParticlePosition; //磁場保存 切り替え
@@ -82,9 +88,18 @@ public class NewParticleController : MonoBehaviour
         {
             particleNumber = setParticle.MagneticParticle.Length;
             MagneticParticle = new GameObject[particleNumber];
+            if (useLine)
+            {
+                lineRenderer = new LineRenderer[particleNumber];
+            }
             for (i = 0; i < particleNumber; i++)
             {
                 MagneticParticle[i] = setParticle.MagneticParticle[i];
+
+                if (useLine)
+                {
+                    SetLineRenderer(i);
+                }
             }
         } else
         {
@@ -95,22 +110,25 @@ public class NewParticleController : MonoBehaviour
         brownX = new Vector3[particleNumber];
         H = new Vector3[particleNumber];
         dH = new Vector3[particleNumber];
-        MagneticParticleRB = new Rigidbody[particleNumber];
-        MagneticParticleTrans = new Transform[particleNumber];
-        BeforePosition = new Vector3[particleNumber];
-        brownX_before = new Vector3[particleNumber];
+        MagneticParticle_rb = new Rigidbody[particleNumber];
+        MagneticParticle_trans = new Transform[particleNumber];
+        M_ofParticles = new Vector3[particleNumber];
+        //BeforePosition = new Vector3[particleNumber];
+        //brownX_before = new Vector3[particleNumber];
         AllParticlePosition = new string[SimulationController.MaxStep, particleNumber];
+        defaultPos = new Vector3[particleNumber];
 
         //MPRBを取得, 初期位置を代入
         for (i = 0; i < particleNumber; i++)
         {
-            MagneticParticleRB[i] = MagneticParticle[i].GetComponent<Rigidbody>();
-            MagneticParticleTrans[i] = MagneticParticle[i].GetComponent<Transform>();
-            BeforePosition[i] = MagneticParticle[i].transform.position;
+            MagneticParticle_rb[i] = MagneticParticle[i].GetComponent<Rigidbody>();
+            MagneticParticle_trans[i] = MagneticParticle[i].GetComponent<Transform>();
+            //BeforePosition[i] = MagneticParticle[i].transform.position;
+            defaultPos[i] = MagneticParticle_trans[i].position;
         }
 
         //回転用 角度設定（30度）
-        //shita_y = 30 * Pi / 180;
+        shita_y = 30 * Pi / 180;
 
         //パラメータ設定
         thDist = thDist * diameter;
@@ -132,8 +150,60 @@ public class NewParticleController : MonoBehaviour
             Directory.CreateDirectory(dirN);
             swP = new StreamWriter(dirN + "/particle_position_" + DateTime.Now.Month.ToString() + "_" + DateTime.Now.Day.ToString() + "_" + DateTime.Now.Hour.ToString() + DateTime.Now.Minute.ToString() + ".csv");
         }
+    }
 
+    void AddMagParticle()
+    {
+        GameObject newMagneticParticle = Instantiate(MagneticParticlePrefab);
+        newMagneticParticle.transform.SetParent(this.transform);
+        newMagneticParticle.transform.localScale = new Vector3(diameter, diameter, diameter) / MCoefficient;
+        Vector3 newPos = Vector3.zero;
+        int i;
+        if (addBeadsByWallPos)
+        {
+            for(i = 0; i < WallObjects.Length; i++)
+            {
+                newPos += WallObjects[i].transform.position;
+            }
+            newMagneticParticle.transform.position = newPos / WallObjects.Length;
+        } else
+        {
+            for (i = 0; i < particleNumber; i++)
+            {
+                newPos += MagneticParticle_trans[i].position;
+            }
+            newMagneticParticle.transform.position = newPos / particleNumber;
+        }
+
+        particleNumber += 1;
+        Array.Resize(ref MagneticParticle, particleNumber);
+        Array.Resize(ref MagneticParticle_rb, particleNumber);
+        Array.Resize(ref MagneticParticle_trans, particleNumber);
+
+        MagneticParticle[particleNumber - 1] = newMagneticParticle;
+        MagneticParticle_rb[particleNumber - 1] = newMagneticParticle.GetComponent<Rigidbody>();
+        MagneticParticle_trans[particleNumber - 1] = newMagneticParticle.GetComponent<Transform>();
+
+        if (useLine)
+        {
+            Array.Resize(ref lineRenderer, particleNumber);
+            SetLineRenderer(particleNumber - 1);
+        }
+        brownX = new Vector3[particleNumber];
+        H = new Vector3[particleNumber];
+        dH = new Vector3[particleNumber];
+        AllParticlePosition = new string[SimulationController.MaxStep, particleNumber];
         M_ofParticles = new Vector3[particleNumber];
+
+        Debug.Log("粒子数を" + particleNumber + "へ変更しました");
+    }
+
+    void SetLineRenderer(int i)
+    {
+        lineRenderer[i] = MagneticParticle[i].AddComponent<LineRenderer>();
+        lineRenderer[i].startWidth = 1f;
+        lineRenderer[i].endWidth = 0f;
+        lineRenderer[i].material = LineMaterial;
     }
 
     private void FixedUpdate()
@@ -156,7 +226,7 @@ public class NewParticleController : MonoBehaviour
                 //s += MagneticParticleTrans[j].position.y.ToString("F3");
                 //s += ",";
                 //s += MagneticParticleTrans[j].position.z.ToString("F3");
-                r += Vector3.SqrMagnitude(MagneticParticleTrans[j].position);
+                r += Vector3.SqrMagnitude(MagneticParticle_trans[j].position - defaultPos[j]);
             }
             s += (r/particleNumber).ToString("F5");
             swP.WriteLine(s);
@@ -202,6 +272,11 @@ public class NewParticleController : MonoBehaviour
         {
             Interactive(); //磁気相互作用
         }
+
+        if (useRotation)
+        {
+            RotationMagneticField();
+        }
     }
 
     private void Update()
@@ -225,15 +300,23 @@ public class NewParticleController : MonoBehaviour
             shita_y = 0f;
             ChangeMagneticField();
         }
+        if (Input.GetKeyDown(KeyCode.C))
+        {
+            ChangeMagneticField();
+        }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            AddMagParticle();
+        }
     }
 
     private void Noise() //ブラウン運動
     {
         for (n = 0; n < particleNumber; n++)
         {
-            nowPos = MagneticParticleTrans[n].position;
-            V = (nowPos - BeforePosition[n]) * MCoefficient / stepTime;
-            BeforePosition[n] = nowPos;
+            nowPos = MagneticParticle_trans[n].position;
+            //V = (nowPos - BeforePosition[n]) * MCoefficient / stepTime;
+            //BeforePosition[n] = nowPos;
 
             //ボックスミュラー法（一様分布の乱数を標準正規分布へ 
             x = Mathf.Sqrt(-2.0f * Mathf.Log(UnityEngine.Random.Range(0.00001f, 1.0f))) * Mathf.Cos(2.0f * Pi * UnityEngine.Random.Range(0f, 1.0f));
@@ -249,12 +332,12 @@ public class NewParticleController : MonoBehaviour
             //位置制御
             if (useTrans)
             {
-                MagneticParticleTrans[n].transform.Translate(brownX[n]/ MCoefficient);
+                MagneticParticle_trans[n].Translate(brownPow * brownX[n]/ MCoefficient);
             }
             else
             {
                 //MagneticParticleRB[n].AddForce((brownX[n]) / stepTime, ForceMode.VelocityChange);
-                MagneticParticleRB[n].AddForce((brownX[n]) / KgCoefficient);
+                MagneticParticle_rb[n].AddForce((brownX[n]) / KgCoefficient);
             }
 
             //速度制御
@@ -271,7 +354,7 @@ public class NewParticleController : MonoBehaviour
         {
             Vector3 RandomPow = new Vector3(UnityEngine.Random.Range(-pow, pow), UnityEngine.Random.Range(-pow, pow), UnityEngine.Random.Range(-pow, pow));
 
-            MagneticParticleRB[n].AddForce(RandomPow);
+            MagneticParticle_rb[n].AddForce(RandomPow);
         }
     }
 
@@ -281,26 +364,45 @@ public class NewParticleController : MonoBehaviour
         {
             H[i] = new Vector3(0f, 0f, 0f);
 
-            //磁石-粒子間相互作用 追加23/9/28 変更24/2/8
+            //磁石-粒子間相互作用
             if (useMagnetOBJ)
             {
-                PosVect = MagneticParticleTrans[i].position - MagnetOBJTrans.position;
+                PosVect = MagneticParticle_trans[i].position - MagnetOBJTrans.position;
                 dist = Mathf.Sqrt(Vector3.Dot(PosVect, PosVect));
                 E = PosVect / dist;
                 dist = dist * MCoefficient;
 
-                //磁石が粒子iの位置に作り出す磁場に応じて磁化
-                M_ofParticles[i] =  H_pow / 100 * (-1f / 4f * Pi * u0) * ((M0/dist*dist*dist)-(3*Vector3.Dot(M0, PosVect)*PosVect/dist * dist * dist * dist * dist));
+                ////磁石が粒子iの位置に作り出す磁場・・・10^-23の磁力で作動（距離が近いため値が大きくなり過ぎている）
+                PosVect = PosVect * MCoefficient;
+                M_ofParticles[i] = (1f / (4f * Pi * u0)) * (- (M0 / (dist * dist * dist)) + (3 * Vector3.Dot(M0, PosVect) * PosVect / (dist * dist * dist * dist * dist)));
+                //Debug.Log("M0:" + M0);
+                //Debug.Log("dist:" + dist);
+                //Debug.Log("PosVect:" + PosVect);
+                //Debug.Log(H_pow);
+                //Debug.Log(M_ofParticles[i].magnitude);
+                //Debug.Log("磁石" + M_ofParticles[i].z);
 
-                //磁場による粒子にはたらく力
-                M1 = M_ofParticles[i];
-                H[i] = -(3f * u0 / (4f * Pi * dist * dist * dist * dist)) * (Vector3.Dot(M1, E) * M0
+
+                //粒子iの磁荷
+                q = kai * Mathf.Pow(H_pow, 0.383f);
+                //q = kai * Mathf.Pow(H_pow / (4 * Pi * u0 * dist * dist), 0.383f);
+                //Debug.Log(q);
+
+                //磁気モーメントM = 1/u0 * q * d ・・・　A/m = emu(A/m^2) * d(m)
+                //x = (q * diameter / u0) * Mathf.Sin(Mathf.Deg2Rad * shita_y);
+                //y = (q * diameter / u0) * Mathf.Sin(Mathf.Deg2Rad * shita_x);
+                //z = (q * diameter / u0) * Mathf.Cos(Mathf.Deg2Rad * shita_y) * Mathf.Cos(Mathf.Deg2Rad * shita_x);
+                //M1 = new Vector3(x, y, z);
+
+                //磁石-粒子間相互作用・・・元の値とかなり近い磁力で作動
+                H[i] = (3f * u0 / (4f * Pi * dist * dist * dist * dist)) * (Vector3.Dot(M1, E) * M0
                      + Vector3.Dot(M0, E) * M1 + Vector3.Dot(M1, M0) * E
                      - 5f * Vector3.Dot(M1, E) * Vector3.Dot(M0, E) * E);
             }
         }
 
         //粒子間相互作用
+        Vector3 sum = Vector3.zero;
         for (i = 0; i < particleNumber; i++)
         {
             for (j = i + 1; j < particleNumber; j++)
@@ -311,7 +413,7 @@ public class NewParticleController : MonoBehaviour
                     M2 = M_ofParticles[j];
                 }
 
-                PosVect = MagneticParticleTrans[i].position - MagneticParticleTrans[j].position;
+                PosVect = MagneticParticle_trans[i].position - MagneticParticle_trans[j].position;
                 dist = Mathf.Sqrt(Vector3.Dot(PosVect, PosVect));
                 if (dist < thDist)
                 {
@@ -326,9 +428,23 @@ public class NewParticleController : MonoBehaviour
                     H[j] -= dH[i];
                 }
             }
-            MagneticParticleRB[i].AddForce(H[i] / KgCoefficient);
-            //Debug.Log(H[i]/KgCoefficient);
+            MagneticParticle_rb[i].AddForce(H[i] / KgCoefficient);
+            if (useLine)
+            {
+                Vector3 lineLength = lineCoefficient * H[i] / KgCoefficient + MagneticParticle_trans[i].position;
+                Vector3[] lineVects = {MagneticParticle_trans[i].position, lineLength};
+                lineRenderer[i].SetPositions(lineVects);
+            }
+            //Debug.Log(i + ":" + H[i] / KgCoefficient);
+            //Debug.Log("X:" + H[i].x / KgCoefficient);
+            //Debug.Log("Y:" + H[i].y / KgCoefficient);
+            //Debug.Log("Z:" + H[i].z / KgCoefficient);
+            sum += H[i];
         }
+        //Debug.Log("sum:" + sum);
+        //Debug.Log("x:" + sum.x);
+        //Debug.Log("y:" + sum.y);
+        //Debug.Log("z:" + sum.z);
     }
 
     public void ChangeMagneticField()
@@ -346,33 +462,32 @@ public class NewParticleController : MonoBehaviour
         //M1 = new Vector3(x, y, z);
         //M2 = M1;
 
-        if (!useMagnetOBJ)
+        if (useMagnetOBJ)
         {
-            //Dynabeadsの磁化率は磁場の強さにより変化する
-            //Excelより、y=X^0.383 q 磁荷 Wb, emu
-            q = kai * Mathf.Pow(H_pow, 0.383f);
-
-            //均一磁場
-            shita_y = Mathf.Deg2Rad * shita_y;
-            shita_x = Mathf.Deg2Rad * shita_x;
-
-            //磁気モーメントM = 1/u0 * q * d ・・・　A/m = emu(A/m^2) * d(m)
-            x = (q * diameter / u0) * Mathf.Sin(shita_y);
-            y = (q * diameter / u0) * Mathf.Sin(shita_x);
-            z = (q * diameter / u0) * Mathf.Cos(shita_y) * Mathf.Cos(shita_x);
-
-            M1 = new Vector3(x, y, z);
-            M2 = M1;
-        } else
-        {
-            //不均一磁場
+            //不均一磁場(磁石)
             Vector3 MagnetRotation = MagnetOBJ.GetComponent<Transform>().rotation.eulerAngles;
             shita_y = MagnetRotation.y;
             shita_x = MagnetRotation.x;
 
+            //
+            //
+            //
             //1 G = 1000/4π A/m → A/m = H_pow(G) / 79.58
+            //磁石の長さがパラメータにないので入れる！！！！！！！！！！！！！！
+            //
+            //            
             M0 = H_pow / 79.58f * new Vector3(Mathf.Sin(shita_y), Mathf.Sin(shita_x), Mathf.Cos(shita_y) * Mathf.Cos(shita_x));
         }
+        //Excelより、y=X^0.383 q 磁荷 Wb, emu
+        q = kai * Mathf.Pow(H_pow, 0.383f);
+
+        //磁気モーメントM = 1/u0 * q * d ・・・　A/m = emu(A/m^2) * d(m)
+        x = (q * diameter / u0) * Mathf.Sin(Mathf.Deg2Rad * shita_y);
+        z = (q * diameter / u0) * Mathf.Sin(Mathf.Deg2Rad * shita_x);
+        y = (q * diameter / u0) * Mathf.Cos(Mathf.Deg2Rad * shita_y) * Mathf.Cos(Mathf.Deg2Rad * shita_x);
+
+        M1 = new Vector3(x, y, z);
+        M2 = M1;
     }
 
     public void ONMag()
@@ -416,5 +531,17 @@ public class NewParticleController : MonoBehaviour
             string s2 = string.Join(" ", s1);
             AllParticlePosition[step, s] = s2;
         }
+    }
+
+    private void RotationMagneticField()
+    {
+        //shita_x += rotationSpeed * stepTime * Pi / 180;
+        shita_x += rotationSpeed * stepTime;
+        x = (q * diameter / u0) * Mathf.Sin(Mathf.Deg2Rad * shita_y);
+        z = (q * diameter / u0) * Mathf.Sin(Mathf.Deg2Rad * shita_x);
+        y = (q * diameter / u0) * Mathf.Cos(Mathf.Deg2Rad * shita_y) * Mathf.Cos(Mathf.Deg2Rad * shita_x);
+
+        M1 = new Vector3(x, 0.3f * y, z);
+        M2 = M1;
     }
 }

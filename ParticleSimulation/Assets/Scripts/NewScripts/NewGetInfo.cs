@@ -9,7 +9,7 @@ public class NewGetInfo : MonoBehaviour
     SetHeight setHeight;
     public GameObject ParticleController, Wall, ZWall;
     //public Rigidbody RightWall;
-    public Text WallTypeText, ParticleNumberText, MagneticPowerText, WallSpeedText, StepText, RepeatNumberText, TimeText;
+    public Text WallTypeText, ParticleNumberText, MagneticPowerText, WallSpeedText, StepText, RepeatNumberText, TimeText, ArrowText;
     private float size, F, dt;
     bool delay;
 
@@ -53,5 +53,31 @@ public class NewGetInfo : MonoBehaviour
         //WallSpeedText.text = "右壁の速度：" + RightWall.velocity.x;
 
         //RepeatNumber.text = "繰り返し回数：" + wallController.repeatCounter;
+    }
+
+    private void Update()
+    {
+        ArrowText.text = "";
+
+        if (Input.GetKey(KeyCode.UpArrow))
+        {
+            ArrowText.text = ArrowText.text + "↑";
+        }
+
+        if (Input.GetKey(KeyCode.DownArrow))
+        {
+            ArrowText.text = ArrowText.text + "↓";
+        }
+
+        if (Input.GetKey(KeyCode.RightArrow))
+        {
+            ArrowText.text = ArrowText.text + "→";
+        }
+
+        if (Input.GetKey(KeyCode.LeftArrow))
+        {
+            ArrowText.text = ArrowText.text + "←";
+        }
+
     }
 }

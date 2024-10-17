@@ -7,21 +7,39 @@ public class SetParticle : MonoBehaviour
     public NewParticleController newParticleController;
 
     public int setParticleN;
-    public bool set;
+    public bool set, set2, dimer, x, y, z;
     public GameObject Wall;
     float diameter;
-    private int i, j, k, n, maxParticle;
+    private int i, j, k, l, n, maxParticle;
     public float XBorder, YBorder;
     public GameObject MagneticParticlePrefab;
     [HideInInspector] public GameObject[] MagneticParticle;
     public float circleWall_Radius;
+
+    public Vector3 setPos;
 
     void Awake()
     {
         if (set)
         {
             diameter = newParticleController.diameter;
-            SetParticleN(setParticleN);
+            if (set2)
+                SetParticleN2(setParticleN);
+            else
+                SetParticleN(setParticleN);
+            if (x)
+            {
+                transform.Rotate(0, 0, 90);
+            } else if (y)
+            {
+                transform.Rotate(0, 0, 0);
+            }
+            else if (z)
+            {
+                transform.Rotate(90, 0, 0);
+            }
+
+            transform.position = setPos;
         }
     }
 
@@ -81,7 +99,7 @@ public class SetParticle : MonoBehaviour
                         MagneticParticle[n] = Instantiate(MagneticParticlePrefab);
                         MagneticParticle[n].transform.localScale = new Vector3(diameter, diameter, diameter);
                         MagneticParticle[n].transform.SetParent(this.transform);
-                        MagneticParticle[n].transform.position = new Vector3(-pseudoBorder + (float)i * diameter + diameter / 2, -pseudoBorder + (float)j * diameter + diameter / 2, 0);
+                        MagneticParticle[n].transform.position = new Vector3(-pseudoBorder + (float)i * diameter + diameter / 2, 0, -pseudoBorder + (float)j * diameter + diameter / 2);
                         n++;
                     }
                 }
@@ -127,15 +145,16 @@ public class SetParticle : MonoBehaviour
                         if (n < N)
                         {
                             if (k == 0)
-                                setPos = new Vector3(diameter / 2 + i * diameter, diameter / 2 + j * diameter, 0);
+                                setPos = new Vector3(diameter / 2 + i * diameter, 0, diameter / 2 + j * diameter);
                             if (k == 1)
-                                setPos = new Vector3(diameter / 2 + i * diameter, -diameter / 2 + -j * diameter, 0);
+                                setPos = new Vector3(diameter / 2 + i * diameter, 0, -diameter / 2 + -j * diameter);
                             if (k == 2)
-                                setPos = new Vector3(-diameter / 2 + -i * diameter, diameter / 2 + j * diameter, 0);
+                                setPos = new Vector3(-diameter / 2 + -i * diameter, 0, diameter / 2 + j * diameter);
                             if (k == 3)
-                                setPos = new Vector3(-diameter / 2 + -i * diameter, -diameter / 2 + -j * diameter, 0);
+                                setPos = new Vector3(-diameter / 2 + -i * diameter, 0, -diameter / 2 + -j * diameter);
 
                             MagneticParticle[n] = Instantiate(MagneticParticlePrefab);
+                            MagneticParticle[n].transform.localScale = new Vector3(diameter, diameter, diameter);
                             MagneticParticle[n].transform.SetParent(this.transform);
                             MagneticParticle[n].transform.position = setPos;
                             n++;
@@ -145,6 +164,78 @@ public class SetParticle : MonoBehaviour
                             return;
                         }
                     }                    
+                }
+            }
+        }
+    }
+
+    void SetParticleN2(int N)
+    {
+        int maxSetNumber = (int)(Mathf.Sqrt(circleWall_Radius * circleWall_Radius - diameter * diameter) / diameter);
+        int tmpSetNumber;
+        Vector3 setPos = new Vector3(0, 0, 0);
+
+        for (i = 0; i < maxSetNumber; i++)
+        {
+            tmpSetNumber = (int)(Mathf.Sqrt(circleWall_Radius * circleWall_Radius - (i + 1) * diameter * (i + 1) * diameter) / diameter);
+
+            for (j = 0; j < tmpSetNumber; j++)
+            {
+                for (k = 0; k < 4; k++)
+                {
+                    for(l = -1; l < 2; l += 2)
+                        n++;
+                }
+            }
+        }
+
+        if (n < N)
+        {
+            MagneticParticle = new GameObject[n];
+            Debug.Log("粒子数が上限を超えているので粒子数を" + n + "へ自動的に変更しました");
+        }
+        else if (0 <= N)
+        {
+            MagneticParticle = new GameObject[N];
+        }
+
+        n = 0;
+        for (i = 0; i < maxSetNumber; i++)
+        {
+            tmpSetNumber = (int)(Mathf.Sqrt(circleWall_Radius * circleWall_Radius - (i + 1) * diameter * (i + 1) * diameter) / diameter);
+
+            for (j = 0; j < tmpSetNumber; j++)
+            {
+                for (k = 0; k < 4; k++)
+                {
+                    for(l = -1; l < 2; l += 2)
+                    {
+                        if (n < N)
+                        {
+                            if (k == 0)
+                                setPos = new Vector3(diameter / 2 + i * diameter, l * diameter / 2, diameter / 2 + j * diameter);
+                            if (k == 1)
+                                setPos = new Vector3(diameter / 2 + i * diameter, l * diameter / 2, -diameter / 2 + -j * diameter);
+                            if (k == 2)
+                                setPos = new Vector3(-diameter / 2 + -i * diameter, l * diameter / 2, diameter / 2 + j * diameter);
+                            if (k == 3)
+                                setPos = new Vector3(-diameter / 2 + -i * diameter, l * diameter / 2, -diameter / 2 + -j * diameter);
+
+                            MagneticParticle[n] = Instantiate(MagneticParticlePrefab);
+                            MagneticParticle[n].transform.localScale = new Vector3(diameter, diameter, diameter);
+                            MagneticParticle[n].transform.SetParent(this.transform);
+                            MagneticParticle[n].transform.position = setPos;
+                            if (dimer && l > 0) //dimerオンで２個目なら結合
+                            {
+                                MagneticParticle[n].AddComponent<FixedJoint>().connectedBody = MagneticParticle[n-1].GetComponent<Rigidbody>();
+                            }
+                            n++;
+                        }
+                        else
+                        {
+                            return;
+                        }
+                    }
                 }
             }
         }
