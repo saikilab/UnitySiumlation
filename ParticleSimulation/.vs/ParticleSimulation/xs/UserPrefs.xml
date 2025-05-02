@@ -1,11 +1,11 @@
 ﻿<Properties StartupConfiguration="{3EF46B08-A5A1-5455-5F7D-E48F1A9E72EC}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/AddBeads.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/MakeSphereWall.cs">
     <Files>
       <File FileName="Assets/Scripts/WallReceivePow.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/WallController.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/WallController.cs" />
       <File FileName="Assets/Scripts/Unuse/ChangeCamera.cs" />
-      <File FileName="Assets/Scripts/SimulationController.cs" Line="17" Column="1" />
-      <File FileName="Assets/Scripts/GetInfo.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/SimulationController.cs" />
+      <File FileName="Assets/Scripts/GetInfo.cs" />
       <File FileName="Assets/Scripts/SetParticle.cs" />
       <File FileName="Assets/Scripts/FilmPresser.cs" />
       <File FileName="Assets/Scripts/SpeedTest.cs" />
@@ -15,7 +15,7 @@
       <File FileName="Assets/Scripts/FillGap.cs" />
       <File FileName="Assets/Scripts/ChangeParticleColor.cs" />
       <File FileName="Assets/Scripts/CalcRadius.cs" />
-      <File FileName="Assets/Scripts/NewScripts/NewParticleController.cs" Line="361" Column="39" />
+      <File FileName="Assets/Scripts/NewScripts/NewParticleController.cs" Line="475" Column="58" />
       <File FileName="Assets/Scripts/Unuse/Move.cs" />
       <File FileName="Assets/Scripts/PassingManager.cs" />
       <File FileName="Assets/Scripts/ParticleController.cs" />
@@ -25,8 +25,8 @@
       <File FileName="Assets/Scripts/CalcWallPow.cs" />
       <File FileName="Assets/Scripts/NewScripts/NewGetInfo.cs" />
       <File FileName="Assets/Scripts/NewScripts/ObjectController.cs" />
-      <File FileName="Assets/Scripts/AddBeads.cs" Line="23" Column="1" />
-      <File FileName="Assets/Scripts/Brown.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/AddBeads.cs" />
+      <File FileName="Assets/Scripts/Brown.cs" />
       <File FileName="Assets/Scripts/Grid.cs" />
       <File FileName="Assets/Scripts/SaveController.cs" />
       <File FileName="Assets/Scripts/PosSave.cs" />
@@ -35,11 +35,14 @@
       <File FileName="Assets/Scripts/NewScripts/FpZ.cs" />
       <File FileName="Assets/Scripts/NewScripts/FpX.cs" />
       <File FileName="Assets/Scripts/NewScripts/FpY.cs" />
-      <File FileName="Assets/Scripts/MakeSphereWall.cs" Line="40" Column="27" />
+      <File FileName="Assets/Scripts/MakeSphereWall.cs" Line="258" Column="58" />
       <File FileName="Assets/Scripts/HingeWallPos.cs" />
       <File FileName="Assets/Scripts/SaveSphereWallPos.cs" />
-      <File FileName="Assets/Scripts/BrownJanus.cs" Line="50" Column="40" />
-      <File FileName="Assets/Scripts/Unuse/ParticleController0.cs" Line="10" Column="21" />
+      <File FileName="Assets/Scripts/BrownJanus.cs" />
+      <File FileName="Assets/Scripts/Unuse/ParticleController0.cs" />
+      <File FileName="Assets/Scripts/NewScripts/BloodController.cs" />
+      <File FileName="Assets/Scripts/NewScripts/TerrainChanger1.cs" />
+      <File FileName="Assets/Scripts/NewScripts/TubeReceivePow.cs" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -49,7 +52,7 @@
               <Node name="Scripts" expanded="True">
                 <Node name="NewScripts" expanded="True" />
                 <Node name="Unuse" expanded="True" />
-                <Node name="AddBeads.cs" selected="True" />
+                <Node name="MakeSphereWall.cs" selected="True" />
               </Node>
             </Node>
           </Node>
@@ -59,7 +62,7 @@
   </MonoDevelop.Ide.Workbench>
   <MonoDevelop.Ide.DebuggingService.PinnedWatches />
   <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
-  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="c0e96b5b-212b-4d67-9877-d74462231c96" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="27b1ed10-3ea5-47b2-b948-6b317e997049" />
   <MonoDevelop.Ide.DebuggingService.Breakpoints>
     <BreakpointStore />
   </MonoDevelop.Ide.DebuggingService.Breakpoints>

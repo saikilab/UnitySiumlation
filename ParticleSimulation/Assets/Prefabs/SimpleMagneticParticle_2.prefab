@@ -16,7 +16,7 @@ GameObject:
   - component: {fileID: 6227661156693036749}
   - component: {fileID: 7607808012069006259}
   - component: {fileID: -1593656518638907740}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SimpleMagneticParticle_2
   m_TagString: Particle
   m_Icon: {fileID: 0}
@@ -137,7 +137,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2500388656286711349}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3023b65d9c75941bdaf8910d6a4cf0f9, type: 3}
   m_Name: 

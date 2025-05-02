@@ -66,11 +66,13 @@ public class NewParticleController : MonoBehaviour
     [HideInInspector] public float H_pow; //外部磁場の強さ(G) 70 A/m =  約1 G
     public GameObject MagneticParticlePrefab, MagnetOBJ;
     public Transform MagnetOBJTrans;
-    public bool useMagnetOBJ, useLine;
+    public bool useMagnetOBJ, useLine, useLineHit, useSumLine;
     public float lineCoefficient;
     public Material LineMaterial;
     Vector3[] M_ofParticles;
-    LineRenderer[] lineRenderer;
+    LineRenderer[] lineRenderer_Sum;
+    LineRenderer[,] lineRenderer;
+    GameObject[,] lineChilds;
 
     //Save value
     public bool saveParticlePosition; //磁場保存 切り替え
@@ -88,17 +90,20 @@ public class NewParticleController : MonoBehaviour
         {
             particleNumber = setParticle.MagneticParticle.Length;
             MagneticParticle = new GameObject[particleNumber];
-            if (useLine)
-            {
-                lineRenderer = new LineRenderer[particleNumber];
-            }
+
             for (i = 0; i < particleNumber; i++)
             {
                 MagneticParticle[i] = setParticle.MagneticParticle[i];
+            }
 
-                if (useLine)
+            if (useLine)
+            {
+                if (useSumLine)
                 {
-                    SetLineRenderer(i);
+                    InitSumLineRenderer();
+                }else
+                {
+                    InitLineRenderer();
                 }
             }
         } else
@@ -131,11 +136,11 @@ public class NewParticleController : MonoBehaviour
         shita_y = 30 * Pi / 180;
 
         //パラメータ設定
+        kai = KgCoefficient * diameter * diameter * diameter / (2.8f * 2.8f * 2.8f);//unity粒子質量1kg*質量係数*単位質量磁化率(emu/g)→磁化率へ（Dynabeadsの場合は磁場により変化する）
         thDist = thDist * diameter;
         diameter = diameter * MCoefficient;
         gamma = 6 * Pi * (diameter / 2) * eta;
         D = kb * T / gamma;
-        kai = 1 * KgCoefficient;//unity粒子質量1kg*質量係数*単位質量磁化率(emu/g)→磁化率へ（Dynabeadsの場合は磁場により変化する）
 
         //磁場の初期条件
         if (useStartMag)
@@ -186,8 +191,22 @@ public class NewParticleController : MonoBehaviour
 
         if (useLine)
         {
-            Array.Resize(ref lineRenderer, particleNumber);
-            SetLineRenderer(particleNumber - 1);
+            if (useSumLine)
+            {
+                InitSumLineRenderer();
+            } else
+            {
+                InitLineRenderer();
+            }
+            ////Array.Resize(ref lineRenderer, particleNumber);
+            //lineRenderer = new LineRenderer[particleNumber, particleNumber]; //二次元配列に変更
+            //lineChilds = new GameObject[particleNumber, particleNumber];
+            //for (j = 0; j < particleNumber; j++)
+            //{
+            //    lineChilds[particleNumber - 1, j] = new GameObject(j.ToString());
+            //    lineChilds[particleNumber - 1, j].transform.parent = MagneticParticle[i].transform;
+            //}
+            //SetLineRenderer(particleNumber - 1);
         }
         brownX = new Vector3[particleNumber];
         H = new Vector3[particleNumber];
@@ -198,13 +217,130 @@ public class NewParticleController : MonoBehaviour
         Debug.Log("粒子数を" + particleNumber + "へ変更しました");
     }
 
-    void SetLineRenderer(int i)
+    void InitSumLineRenderer()
     {
-        lineRenderer[i] = MagneticParticle[i].AddComponent<LineRenderer>();
-        lineRenderer[i].startWidth = 1f;
-        lineRenderer[i].endWidth = 0f;
-        lineRenderer[i].material = LineMaterial;
+        if(lineRenderer_Sum == null)
+        {
+            lineRenderer_Sum = new LineRenderer[particleNumber];
+
+            for (i = 0; i < particleNumber; i++)
+            {
+                lineRenderer_Sum[i] = MagneticParticle[i].AddComponent<LineRenderer>();
+                lineRenderer_Sum[i].startWidth = 1f;
+                lineRenderer_Sum[i].endWidth = 0f;
+                lineRenderer_Sum[i].material = LineMaterial;
+            }
+        } else
+        {
+            var newLineRenderer = new LineRenderer[particleNumber];
+
+            for (i = 0; i < particleNumber - 1; i++)
+            {
+                newLineRenderer[i] = lineRenderer_Sum[i];
+            }
+
+            newLineRenderer[particleNumber - 1] = MagneticParticle[i].AddComponent<LineRenderer>();
+            newLineRenderer[particleNumber - 1].startWidth = 1f;
+            newLineRenderer[particleNumber - 1].endWidth = 0f;
+            newLineRenderer[particleNumber - 1].material = LineMaterial;
+
+            lineRenderer_Sum = new LineRenderer[particleNumber];
+
+            for (i = 0; i < particleNumber; i++)
+            {
+                lineRenderer_Sum[i] = newLineRenderer[i];
+            }
+        }
     }
+
+    void InitLineRenderer()
+    {
+        var newlineRenderer = new LineRenderer[particleNumber, particleNumber];
+        var newLineChilds = new GameObject[particleNumber, particleNumber];
+        int j;
+
+        if (lineChilds == null) //初期化
+        {
+            for (i = 0; i < particleNumber; i++)
+            {
+                for (j = 0; j < particleNumber; j++)
+                {
+
+                    newLineChilds[i, j] = new GameObject(j.ToString());
+                    newLineChilds[i, j].transform.parent = MagneticParticle[i].transform;
+                }
+            }
+
+            for (i = 0; i < particleNumber; i++)
+            {
+                for (j = 0; j < particleNumber; j++)
+                {
+                    newlineRenderer[i, j] = newLineChilds[i, j].AddComponent<LineRenderer>();
+                    newlineRenderer[i, j].startWidth = 1f;
+                    newlineRenderer[i, j].endWidth = 0f;
+                    newlineRenderer[i, j].material = LineMaterial;
+                }
+            }
+        }
+        else //追加
+        {
+            for (i = 0; i < particleNumber; i++)
+            {
+                for (j = 0; j < particleNumber; j++)
+                {
+                    if(i == particleNumber - 1 || j == particleNumber - 1)
+                    {
+                        newLineChilds[i, j] = new GameObject(j.ToString());
+                        newLineChilds[i, j].transform.parent = MagneticParticle[i].transform;
+
+                        newlineRenderer[i, j] = newLineChilds[i, j].AddComponent<LineRenderer>();
+                        newlineRenderer[i, j].startWidth = 1f;
+                        newlineRenderer[i, j].endWidth = 0f;
+                        newlineRenderer[i, j].material = LineMaterial;
+                    }
+                    else
+                    {
+                        newLineChilds[i, j] = lineChilds[i, j];
+                        newlineRenderer[i, j] = lineRenderer[i, j];
+                    }
+                }
+            }
+        }
+
+        lineChilds = new GameObject[particleNumber, particleNumber];
+        lineRenderer = new LineRenderer[particleNumber, particleNumber];
+
+        for (i = 0; i < particleNumber; i++)
+        {
+            for (j = 0; j < particleNumber; j++)
+            {
+                lineChilds[i, j] = newLineChilds[i, j];
+                lineRenderer[i, j] = newlineRenderer[i, j];
+            }
+        }
+    }
+
+    //void SetLineRenderer(int i)
+    //{
+    //    //lineRenderer[i] = MagneticParticle[i].AddComponent<LineRenderer>();
+    //    //lineRenderer[i].startWidth = 1f;
+    //    //lineRenderer[i].endWidth = 0f;
+    //    //lineRenderer[i].material = LineMaterial;
+
+    //    Debug.Log(lineRenderer.Length);
+    //    Debug.Log(lineChilds.Length);
+
+    //    //二次元配列に変更
+    //    int j;
+    //    for(j = 0; j < particleNumber; j++)
+    //    {
+    //        Debug.Log(j);
+    //        lineRenderer[i, j] = lineChilds[i, j].AddComponent<LineRenderer>();
+    //        lineRenderer[i, j].startWidth = 1f;
+    //        lineRenderer[i, j].endWidth = 0f;
+    //        lineRenderer[i, j].material = LineMaterial;
+    //    }
+    //}
 
     private void FixedUpdate()
     {
@@ -336,8 +472,8 @@ public class NewParticleController : MonoBehaviour
             }
             else
             {
-                //MagneticParticleRB[n].AddForce((brownX[n]) / stepTime, ForceMode.VelocityChange);
-                MagneticParticle_rb[n].AddForce((brownX[n]) / KgCoefficient);
+                MagneticParticle_rb[n].AddForce(brownX[n] / MCoefficient, ForceMode.VelocityChange);
+                //MagneticParticle_rb[n].AddForce((brownX[n]) / KgCoefficient);
             }
 
             //速度制御
@@ -424,22 +560,127 @@ public class NewParticleController : MonoBehaviour
                           + Vector3.Dot(M2, E) * M1 + Vector3.Dot(M1, M2) * E
                           - 5f * Vector3.Dot(M1, E) * Vector3.Dot(M2, E) * E);
 
+
+                    //dH[i] = (3f * u0 / (4f * Pi * dist * dist * dist * dist))
+                    //      * (Vector3.Cross (Vector3.Cross(E, M1), M2)
+                    //      + Vector3.Cross(Vector3.Cross(E, M2), M1)
+                    //      - 2 * Vector3.Dot(M1, M2) * E
+                    //      + 5f * Vector3.Dot(Vector3.Cross(E, M1), Vector3.Cross(E, M2)) * E);
+
                     H[i] += dH[i];
                     H[j] -= dH[i];
+
+                    //二次元配列用
+                    if (useLine) {
+                        if(!useSumLine)
+                        {
+                            Vector3 lineLength = lineCoefficient * dH[i] / KgCoefficient;
+                            Vector3[] lineVects_i = { MagneticParticle_trans[i].position, lineLength + MagneticParticle_trans[i].position };
+                            Vector3[] lineVects_j = { MagneticParticle_trans[j].position, -lineLength + MagneticParticle_trans[j].position };
+
+                            //障害物の位置でラインを止める
+                            if (useLineHit)
+                            {
+                                RaycastHit hit_i;
+                                Ray ray_i = new Ray(MagneticParticle_trans[i].position, lineLength); //rayの始点と向きを指定
+                                if (Physics.Raycast(ray_i, out hit_i, lineLength.magnitude)) //rayの距離を指定して発射
+                                {
+                                    if (hit_i.collider.gameObject.tag == "Particle")
+                                    {
+                                        //Debug.Log("hit");
+                                        lineVects_i = new Vector3[] { MagneticParticle_trans[i].position, hit_i.point };
+                                    }
+                                }
+                                else
+                                {
+                                    //Debug.Log("miss");
+                                }
+
+                                RaycastHit hit_j;
+                                Ray ray_j = new Ray(MagneticParticle_trans[j].position, -lineLength); //rayの始点と向きを指定
+                                if (Physics.Raycast(ray_j, out hit_j, lineLength.magnitude)) //rayの距離を指定して発射
+                                {
+                                    if (hit_j.collider.gameObject.tag == "Particle")
+                                    {
+                                        //Debug.Log("hit");
+                                        lineVects_j = new Vector3[] { MagneticParticle_trans[j].position, hit_j.point };
+                                    }
+                                }
+                                else
+                                {
+                                    //Debug.Log("miss");
+                                }
+                            }
+
+                            lineRenderer[i, j].SetPositions(lineVects_i);
+                            lineRenderer[j, i].SetPositions(lineVects_j);
+                        }
+                    }
+                }
+            }
+            if (useLine)
+            {
+                if (useSumLine)
+                {
+                    Vector3 lineLength = lineCoefficient * H[i] / KgCoefficient;
+                    Vector3[] lineVects_i = { MagneticParticle_trans[i].position, lineLength + MagneticParticle_trans[i].position };
+
+                    //障害物の位置でラインを止める
+                    if (useLineHit)
+                    {
+                        RaycastHit hit_i;
+                        Ray ray_i = new Ray(MagneticParticle_trans[i].position, lineLength); //rayの始点と向きを指定
+                        if (Physics.Raycast(ray_i, out hit_i, lineLength.magnitude)) //rayの距離を指定して発射
+                        {
+                            if (hit_i.collider.gameObject.tag == "Particle")
+                            {
+                                //Debug.Log("hit");
+                                lineVects_i = new Vector3[] { MagneticParticle_trans[i].position, hit_i.point };
+                            }
+                        }
+                        else
+                        {
+                            //Debug.Log("miss");
+                        }
+                    }
+
+                    lineRenderer_Sum[i].SetPositions(lineVects_i);
                 }
             }
             MagneticParticle_rb[i].AddForce(H[i] / KgCoefficient);
-            if (useLine)
-            {
-                Vector3 lineLength = lineCoefficient * H[i] / KgCoefficient + MagneticParticle_trans[i].position;
-                Vector3[] lineVects = {MagneticParticle_trans[i].position, lineLength};
-                lineRenderer[i].SetPositions(lineVects);
-            }
+            //Debug.Log(H[i] / KgCoefficient);
+
+            //if (useLine)
+            //{
+            //    Vector3 lineLength = lineCoefficient * H[i] / KgCoefficient;
+            //    Vector3[] lineVects = { MagneticParticle_trans[i].position, lineLength + MagneticParticle_trans[i].position };
+
+            //    //障害物の位置でラインを止める
+            //    if (useLineHit)
+            //    {
+            //        RaycastHit hit;
+            //        Ray ray = new Ray(MagneticParticle_trans[i].position, lineLength); //rayの始点と向きを指定
+            //        if (Physics.Raycast(ray, out hit, lineLength.magnitude)) //rayの距離を指定して発射
+            //        {
+            //            if(hit.collider.gameObject.tag == "Particle")
+            //            {
+            //                //Debug.Log("hit");
+            //                lineVects = new Vector3[] { MagneticParticle_trans[i].position, hit.point };
+            //            }
+            //        }
+            //        else
+            //        {
+            //            //Debug.Log("miss");
+            //        }
+            //    }
+
+            //    lineRenderer[i].SetPositions(lineVects);
+            //}
             //Debug.Log(i + ":" + H[i] / KgCoefficient);
             //Debug.Log("X:" + H[i].x / KgCoefficient);
             //Debug.Log("Y:" + H[i].y / KgCoefficient);
             //Debug.Log("Z:" + H[i].z / KgCoefficient);
-            sum += H[i];
+            //sum += H[i];
         }
         //Debug.Log("sum:" + sum);
         //Debug.Log("x:" + sum.x);
@@ -480,6 +721,8 @@ public class NewParticleController : MonoBehaviour
         }
         //Excelより、y=X^0.383 q 磁荷 Wb, emu
         q = kai * Mathf.Pow(H_pow, 0.383f);
+        //q = kai * Mathf.Pow(H_pow, 0.383f) * KgCoefficient;
+        Debug.Log(q);
 
         //磁気モーメントM = 1/u0 * q * d ・・・　A/m = emu(A/m^2) * d(m)
         x = (q * diameter / u0) * Mathf.Sin(Mathf.Deg2Rad * shita_y);
@@ -488,6 +731,11 @@ public class NewParticleController : MonoBehaviour
 
         M1 = new Vector3(x, y, z);
         M2 = M1;
+        //Debug.Log("M:" + M1 / KgCoefficient);
+
+        //Debug.Log(x);
+        //Debug.Log(y);
+        //Debug.Log(z);
     }
 
     public void ONMag()
@@ -541,7 +789,7 @@ public class NewParticleController : MonoBehaviour
         z = (q * diameter / u0) * Mathf.Sin(Mathf.Deg2Rad * shita_x);
         y = (q * diameter / u0) * Mathf.Cos(Mathf.Deg2Rad * shita_y) * Mathf.Cos(Mathf.Deg2Rad * shita_x);
 
-        M1 = new Vector3(x, 0.3f * y, z);
+        M1 = new Vector3(x, y, z);
         M2 = M1;
     }
 }

@@ -58,12 +58,15 @@
   <ItemGroup>
     <Compile Include="Assets/Scripts/Unuse/SimulationController0.cs" />
     <Compile Include="Assets/Scripts/ChangeParticleColor.cs" />
+    <Compile Include="Assets/Scripts/NewScripts/BloodController.cs" />
     <Compile Include="Assets/Scripts/HighPos.cs" />
     <Compile Include="Assets/Scripts/Impulse.cs" />
     <Compile Include="Assets/Scripts/SphereWall.cs" />
+    <Compile Include="Assets/Scripts/NewScripts/TerrainChanger1.cs" />
     <Compile Include="Assets/Scripts/MeshManager.cs" />
     <Compile Include="Assets/Scripts/MakeSphereWall.cs" />
     <Compile Include="Assets/Scripts/WallReceivePow.cs" />
+    <Compile Include="Assets/Scripts/NewScripts/TubeReceivePow.cs" />
     <Compile Include="Assets/Scripts/NewScripts/NewParticleController.cs" />
     <Compile Include="Assets/Scripts/TimeManager.cs" />
     <Compile Include="Assets/Scripts/Unuse/MagneticForceController2.cs" />

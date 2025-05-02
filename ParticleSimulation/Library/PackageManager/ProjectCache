@@ -116,6 +116,11 @@ m_ResolvedPackages:
     - 2.1.0
     - 2.2.0
     - 2.3.1
+    - 2.4.3
+    - 2.4.4
+    - 2.5.1
+    - 2.5.2
+    - 2.6.0
     compatible:
     - 1.17.1
     - 1.17.2
@@ -140,6 +145,11 @@ m_ResolvedPackages:
     - 2.1.0
     - 2.2.0
     - 2.3.1
+    - 2.4.3
+    - 2.4.4
+    - 2.5.1
+    - 2.5.2
+    - 2.6.0
     verified: 1.17.7
   dependencies:
   - name: com.unity.services.core
@@ -147,11 +157,11 @@ m_ResolvedPackages:
   resolvedDependencies:
   - name: com.unity.services.core
     version: 1.4.2
-  - name: com.unity.modules.unitywebrequest
+  - name: com.unity.modules.androidjni
     version: 1.0.0
   - name: com.unity.nuget.newtonsoft-json
     version: 3.0.2
-  - name: com.unity.modules.androidjni
+  - name: com.unity.modules.unitywebrequest
     version: 1.0.0
   keywords:
   - backup
@@ -251,6 +261,8 @@ m_ResolvedPackages:
     - 3.0.26
     - 3.0.27
     - 3.0.28
+    - 3.0.31
+    - 3.0.34
     compatible:
     - 3.0.15
     - 3.0.16
@@ -264,7 +276,9 @@ m_ResolvedPackages:
     - 3.0.26
     - 3.0.27
     - 3.0.28
-    verified: 3.0.28
+    - 3.0.31
+    - 3.0.34
+    verified: 3.0.34
   dependencies:
   - name: com.unity.ext.nunit
     version: 1.0.6
@@ -515,9 +529,13 @@ m_ResolvedPackages:
     - 5.1.1
     - 5.2.0
     - 5.2.2
+    - 5.2.3
     - 6.0.1-pre.1
     - 6.0.1-pre.2
     - 6.0.1
+    - 6.0.2
+    - 6.0.3
+    - 6.0.4
     compatible:
     - 5.0.3
     - 5.0.4
@@ -527,21 +545,22 @@ m_ResolvedPackages:
     - 5.1.1
     - 5.2.0
     - 5.2.2
+    - 5.2.3
     verified: 5.0.7
   dependencies:
-  - name: com.unity.settings-manager
-    version: 1.0.3
-  - name: com.unity.modules.physics
-    version: 1.0.0
   - name: com.unity.modules.imgui
     version: 1.0.0
+  - name: com.unity.modules.physics
+    version: 1.0.0
+  - name: com.unity.settings-manager
+    version: 1.0.3
   resolvedDependencies:
-  - name: com.unity.settings-manager
-    version: 1.0.3
-  - name: com.unity.modules.physics
-    version: 1.0.0
   - name: com.unity.modules.imgui
     version: 1.0.0
+  - name: com.unity.modules.physics
+    version: 1.0.0
+  - name: com.unity.settings-manager
+    version: 1.0.3
   keywords:
   - 3d
   - model
@@ -650,6 +669,8 @@ m_ResolvedPackages:
     - 1.4.1
     - 1.4.2
     - 1.4.3
+    - 1.4.4
+    - 1.4.5
     - 2.0.1-exp.1
     - 2.0.1-exp.2
     - 2.0.1-pre.12
@@ -670,6 +691,8 @@ m_ResolvedPackages:
     - 1.4.1
     - 1.4.2
     - 1.4.3
+    - 1.4.4
+    - 1.4.5
     - 2.0.1-exp.1
     - 2.0.1-exp.2
     - 2.0.1-pre.12
@@ -833,6 +856,7 @@ m_ResolvedPackages:
     - 3.0.6
     - 3.0.7
     - 3.0.8
+    - 3.0.9
     - 3.2.0-pre.1
     - 3.2.0-pre.2
     - 3.2.0-pre.3
@@ -842,12 +866,15 @@ m_ResolvedPackages:
     - 3.2.0-pre.7
     - 3.2.0-pre.8
     - 3.2.0-pre.9
+    - 3.2.0-pre.10
+    - 3.2.0-pre.11
     - 4.0.0-pre.1
     - 4.0.0-pre.2
     compatible:
     - 3.0.6
     - 3.0.7
     - 3.0.8
+    - 3.0.9
     - 3.2.0-pre.1
     - 3.2.0-pre.2
     - 3.2.0-pre.3
@@ -857,7 +884,9 @@ m_ResolvedPackages:
     - 3.2.0-pre.7
     - 3.2.0-pre.8
     - 3.2.0-pre.9
-    verified: 3.0.8
+    - 3.2.0-pre.10
+    - 3.2.0-pre.11
+    verified: 3.0.9
   dependencies:
   - name: com.unity.ugui
     version: 1.0.0
@@ -1000,6 +1029,7 @@ m_ResolvedPackages:
     - 1.8.4
     - 1.8.5
     - 1.8.6
+    - 1.8.7
     compatible:
     - 1.6.4
     - 1.6.5
@@ -1019,20 +1049,21 @@ m_ResolvedPackages:
     - 1.8.4
     - 1.8.5
     - 1.8.6
+    - 1.8.7
     verified: 1.6.5
   dependencies:
+  - name: com.unity.modules.audio
+    version: 1.0.0
   - name: com.unity.modules.director
     version: 1.0.0
   - name: com.unity.modules.animation
     version: 1.0.0
-  - name: com.unity.modules.audio
-    version: 1.0.0
   - name: com.unity.modules.particlesystem
     version: 1.0.0
   resolvedDependencies:
-  - name: com.unity.modules.director
-    version: 1.0.0
   - name: com.unity.modules.audio
+    version: 1.0.0
+  - name: com.unity.modules.director
     version: 1.0.0
   - name: com.unity.modules.animation
     version: 1.0.0
@@ -1090,6 +1121,7 @@ m_ResolvedPackages:
     - 1.0.0
     - 3.0.0-exp.1
     - 3.0.0-exp.3
+    - 3.0.0-exp.4
     compatible:
     - 1.0.0
     verified: 1.0.0
@@ -2946,7 +2978,7 @@ m_ResolvedPackages:
     email: 
     url: 
   category: 
-  type: 
+  type: asset
   description: A framework for making any serializable field a setting, complete
     with a pre-built settings interface.
   status: 4
@@ -3042,6 +3074,8 @@ m_ResolvedPackages:
     - 1.12.2
     - 1.12.4
     - 1.12.5
+    - 1.13.0
+    - 1.14.0
     compatible:
     - 1.4.2
     - 1.4.3
@@ -3059,20 +3093,22 @@ m_ResolvedPackages:
     - 1.12.2
     - 1.12.4
     - 1.12.5
+    - 1.13.0
+    - 1.14.0
     verified: 1.4.3
   dependencies:
-  - name: com.unity.modules.unitywebrequest
+  - name: com.unity.modules.androidjni
     version: 1.0.0
   - name: com.unity.nuget.newtonsoft-json
     version: 3.0.2
-  - name: com.unity.modules.androidjni
+  - name: com.unity.modules.unitywebrequest
     version: 1.0.0
   resolvedDependencies:
-  - name: com.unity.modules.unitywebrequest
+  - name: com.unity.modules.androidjni
     version: 1.0.0
   - name: com.unity.nuget.newtonsoft-json
     version: 3.0.2
-  - name: com.unity.modules.androidjni
+  - name: com.unity.modules.unitywebrequest
     version: 1.0.0
   keywords: []
   registry:

@@ -47,6 +47,7 @@ public class PassingManager : MonoBehaviour
                     startPassing = true;
                 }
             }
+            Debug.Break();
         }
         else if(!endPassing && !endSimulation)
         {
@@ -70,6 +71,8 @@ public class PassingManager : MonoBehaviour
             Debug.Log("通過所要時間：" + counter);
             endSimulation = true;
             Reset();
+
+            Debug.Break();
         }
     }
 }

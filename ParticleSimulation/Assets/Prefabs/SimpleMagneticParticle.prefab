@@ -15,7 +15,7 @@ GameObject:
   - component: {fileID: 1612421336001134327}
   - component: {fileID: 6227661156693036749}
   - component: {fileID: 7607808012069006259}
-  m_Layer: 0
+  m_Layer: 10
   m_Name: SimpleMagneticParticle
   m_TagString: Particle
   m_Icon: {fileID: 0}

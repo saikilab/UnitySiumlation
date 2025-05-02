@@ -256,6 +256,7 @@ public class MakeSphereWall : MonoBehaviour
                                 //三角錐の頂点
                                 topPos_a = radius / centralPosition.magnitude;
                                 newVectors[3] = centralPosition * topPos_a - centralPosition;
+                                //Debug.Log(Vector3.Distance(centralPosition, centralPosition * topPos_a));
 
                                 mesh.SetVertices(newVectors);
                                 mesh.SetTriangles(newTriangles, 0);
